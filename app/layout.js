@@ -1,5 +1,9 @@
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
+
 import { Poppins, Roboto } from "next/font/google";
-import "./globals.css";
+import "./globals.css"; 
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -17,15 +21,14 @@ const roboto = Roboto({
 
 export const metadata = {
   title: "LWSkart",
-  description:
-    "LWSkart is an ecommerce application designed by Learn With Sumit",
+  description: "Get all types of home decor in one place.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${roboto.variable}`}>
-        {children}
+      <body className={`${poppins.variable} ${roboto.variable}`}> 
+        {children} 
       </body>
     </html>
   );
