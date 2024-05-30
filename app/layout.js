@@ -4,6 +4,7 @@ config.autoAddCss = false;
 
 import { Poppins, Roboto } from "next/font/google";
 import "./globals.css"; 
+import connectMongo from "@/database/services/connectMongo";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -24,7 +25,8 @@ export const metadata = {
   description: "Get all types of home decor in one place.",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+await connectMongo()
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${roboto.variable}`}> 

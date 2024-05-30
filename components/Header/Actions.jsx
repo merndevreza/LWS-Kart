@@ -31,7 +31,7 @@ const Actions = ({ dictionary }) => {
           </div>
         </div>
       </LinkWithLocale>
-      <LinkWithLocale href="#">
+      <LinkWithLocale href="/account">
         <div className="text-center text-gray-700 hover:text-primary transition relative">
           <div className="text-2xl">
             <FontAwesomeIcon icon={faUser} />
