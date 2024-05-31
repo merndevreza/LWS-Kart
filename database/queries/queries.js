@@ -1,10 +1,21 @@
-import { replaceMongoIdInArray } from "@/utils/replaceMongoId";
+import { replaceMongoIdInArray, replaceMongoIdInObject } from "@/utils/replaceMongoId";
 import { productsModel } from "../models/products-model";
 import connectMongo from "../services/connectMongo";
 import { salesModel } from "../models/sales-model";
 import { categoryModel } from "../models/category-model";
 
 //products
+
+export async function getAllProducts() {
+  await connectMongo();
+  const products = await productsModel
+    .find()
+    .select(["title", "discountPrice", "price", "thumbnail"])
+    .lean();
+
+  return replaceMongoIdInArray(products);
+}
+
 export async function getLatestProducts(totalProductsNeed) {
   await connectMongo();
 
@@ -33,19 +44,16 @@ export async function getTrendingProducts(totalProductsNeed) {
   return replaceMongoIdInArray(products);
 }
 
-export async function getAllProducts() {
+export async function getProductById(id){
   await connectMongo();
-  const products = await productsModel
-    .find()
-    .select(["title", "discountPrice", "price", "thumbnail"])
-    .lean();
-
-  return replaceMongoIdInArray(products);
+  
+  const product=await productsModel.findById(id).lean() 
+  return replaceMongoIdInObject(product)
 }
-
 //category
 export async function getAllCategories(totalCategoryNeed) {
   await connectMongo();
+
   const categories = await categoryModel.find().limit(totalCategoryNeed).lean();
 
   return replaceMongoIdInArray(categories);
@@ -53,10 +61,12 @@ export async function getAllCategories(totalCategoryNeed) {
 
 export async function getProductsByCategory(categoryId) {
   await connectMongo();
+
   const { productsId } = await categoryModel
     .findById(categoryId)
     .select(["productsId"])
     .lean();
+
   const products = await productsModel
     .find({ _id: { $in: productsId } })
     .select(["title", "discountPrice", "price", "thumbnail"])
@@ -64,3 +74,22 @@ export async function getProductsByCategory(categoryId) {
 
   return replaceMongoIdInArray(products);
 }
+
+export async function getProductsByCategoryName(categoryName) {
+  await connectMongo();
+  const regex = new RegExp(categoryName, "i"); 
+
+  const { productsId } = await categoryModel
+  .findOne({ name: { $regex: regex } })
+  .select(["productsId"])
+  .lean();  
+
+  const products = await productsModel
+    .find({ _id: { $in: productsId } })
+    .select(["title", "discountPrice", "price", "thumbnail"])
+    .lean(); 
+
+  return replaceMongoIdInArray(products);
+}
+
+

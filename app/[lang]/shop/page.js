@@ -1,16 +1,19 @@
 import BreadCrumb from "@/components/BreadCrumb";
 import ShopProducts from "@/components/Shop/ShopProducts";
 import ShopSidebar from "@/components/Shop/ShopSidebar";
-import { getAllProducts, getProductsByCategory } from "@/database/queries/queries";
+import {
+  getAllProducts,
+  getProductsByCategory,
+} from "@/database/queries/queries";
 
 const ShopPage = async ({ searchParams: { categoryId } }) => {
-  let products = []
+  let products = [];
   if (categoryId) {
-   products= await getProductsByCategory(categoryId);
-  }else{
-   products= await getAllProducts()
+    products = await getProductsByCategory(categoryId);
+  } else {
+    products = await getAllProducts();
   }
-   
+
   return (
     <main>
       <BreadCrumb pageTitle="Shop" />

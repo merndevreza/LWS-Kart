@@ -3,10 +3,10 @@ import AddToCartBtn from "./AddToCartBtn";
 import AddWishlistBtn from "./AddWishlistBtn";
 import ProductSummary from "./ProductSummary";
 
-const ProductDetails = () => {
+const ProductDetails = ({product}) => {
   return (
     <div>
-      <ProductSummary />
+      <ProductSummary product={product}/>
       <div className="mt-4">
         <h3 className="text-sm text-gray-800 uppercase mb-1">Quantity</h3>
         <div className="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
