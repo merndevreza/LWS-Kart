@@ -9,12 +9,12 @@ const userSchema = new Schema({
     required: true,
     type: String,
   },
-  password: {
-    required: true,
-    type: String,
-  },
   phone: {
     required: false,
+    type: String,
+  },
+  password: {
+    required: true,
     type: String,
   },
   wishlist: {
@@ -24,14 +24,6 @@ const userSchema = new Schema({
   cart: {
     required: false,
     type: Array,
-  },
-  shipping: {
-    required: false,
-    type: Object,
-  },
-  billing: {
-    required: false,
-    type: Object,
   },
 });
 
