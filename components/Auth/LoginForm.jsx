@@ -1,5 +1,5 @@
 "use client";
-import { login } from "@/app/actions";
+import { credentialLogin } from "@/app/actions";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import LinkWithLocale from "../LinkWithLocale";
@@ -11,7 +11,7 @@ const LoginForm = ({ dictionary }) => {
     event.preventDefault();
     try {
       const formData = new FormData(event.currentTarget);
-      const response = await login(formData);
+      const response = await credentialLogin(formData);
       if (!!response.error) {
         setError(response.error.message);
       } else {
@@ -24,7 +24,7 @@ const LoginForm = ({ dictionary }) => {
   return (
     <>
       {error && <div className="text-red-600">{error}</div>}
-      <form onSubmit={onSubmit} autocomplete="off">
+      <form onSubmit={onSubmit}>
         <div className="space-y-2">
           <div>
             <label htmlFor="email" className="text-gray-600 mb-2 block">

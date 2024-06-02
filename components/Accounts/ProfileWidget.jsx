@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import Logout from "../Auth/Logout";
+import EditButton from "./EditButton";
 
 const ProfileWidget = async ({ dictionary }) => {
   const session = await auth();
@@ -9,7 +10,7 @@ const ProfileWidget = async ({ dictionary }) => {
         <h3 className="font-medium text-gray-800 text-lg">
           {dictionary.personalProfile}
         </h3>
-        <button className="text-primary">{dictionary.edit}</button>
+        <EditButton type="profile" user={session?.user} dictionary={dictionary}/>
       </div>
       {session?.user && (
         <div className="space-y-1">

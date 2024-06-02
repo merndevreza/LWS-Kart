@@ -6,7 +6,7 @@ const Footer = ({dictionary}) => {
   return (
     <footer>
       <div className="bg-white pt-16 pb-12 border-t border-gray-100">
-        <div className="container grid grid-cols-1 ">
+        <div className="container grid grid-cols-3 ">
           <FooterLogo dictionary={dictionary}/>
           <FooterNavWidgets dictionary={dictionary}/>
         </div>

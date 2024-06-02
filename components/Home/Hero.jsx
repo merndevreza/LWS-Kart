@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import heroBg from "@/public/assets/images/banner-bg.jpg";
 import LinkWithLocale from "../LinkWithLocale";
 
@@ -18,7 +17,7 @@ const Hero = ({ dictionary }) => {
           </h1>
           <p className="max-w-2xl">{dictionary.heroSubtitle}</p>
           <div className="mt-12">
-            <LinkWithLocale href="#">
+            <LinkWithLocale href="/shop">
               <span
                 className="bg-primary border border-primary text-white px-8 py-3 font-medium 
                   rounded-md hover:bg-transparent hover:text-primary"

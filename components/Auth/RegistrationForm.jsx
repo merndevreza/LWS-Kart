@@ -35,7 +35,7 @@ const RegistrationForm = ({ dictionary }) => {
   return (
     <>
       {error && <div className="text-red-600">{error}</div>}
-      <form autocomplete="off" onSubmit={onSubmit}>
+      <form onSubmit={onSubmit}>
         <div className="space-y-2">
           <div>
             <label htmlFor="name" className="text-gray-600 mb-2 block">

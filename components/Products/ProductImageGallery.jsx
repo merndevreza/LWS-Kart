@@ -1,40 +1,34 @@
+"use client";
 import Image from "next/image";
+import { useState } from "react";
 
-const ProductImageGallery = () => {
+const ProductImageGallery = ({ gallery, title }) => {
+  const [largeImage, setLargeImage] = useState(gallery[0]);
+  const handleChangeImage = (imgUrl) => {
+    setLargeImage(imgUrl);
+  };
   return (
     <div>
       <Image
-        src="../assets/images/products/product1.jpg"
-        alt="product"
+        src={largeImage}
+        alt={title}
         className="w-full"
+        width={800}
+        height={400}
       />
 
       <div className="grid grid-cols-5 gap-4 mt-4">
-        <Image
-          src="../assets/images/products/product2.jpg"
-          alt="product2"
-          className="w-full cursor-pointer border border-primary"
-        />
-        <Image
-          src="../assets/images/products/product3.jpg"
-          alt="product2"
-          className="w-full cursor-pointer border"
-        />
-        <Image
-          src="../assets/images/products/product4.jpg"
-          alt="product2"
-          className="w-full cursor-pointer border"
-        />
-        <Image
-          src="../assets/images/products/product5.jpg"
-          alt="product2"
-          className="w-full cursor-pointer border"
-        />
-        <Image
-          src="../assets/images/products/product6.jpg"
-          alt="product2"
-          className="w-full cursor-pointer border"
-        />
+        {gallery.map((imgUrl) => (
+          <Image
+            onClick={() => handleChangeImage(imgUrl)}
+            key={imgUrl}
+            src={imgUrl}
+            alt={title}
+            width={200}
+            height={150}
+            className="w-full cursor-pointer border border-primary"
+          />
+        ))}
       </div>
     </div>
   );
