@@ -14,7 +14,7 @@ export async function getAllProducts(search) {
   const regex = new RegExp(search, "i");
   const products = await productsModel
     .find({ title: { $regex: regex } })
-    .select(["title", "discountPrice", "price", "thumbnail"])
+    .select(["title", "discountPrice", "price", "size", "thumbnail"])
     .lean();
   return replaceMongoIdInArray(products);
 }
@@ -78,12 +78,21 @@ export async function getProductsByCategoryName(categoryName) {
   return replaceMongoIdInArray(products);
 }
 
+// Filter by category
 export async function getProductsFilteredByCategories(categories) {
+  await connectMongo();
   const categoriesToMatch = categories.split("|");
 
   const allProducts = await productsModel
     .find()
-    .select(["title", "discountPrice", "price", "thumbnail", "category"])
+    .select([
+      "title",
+      "discountPrice",
+      "price",
+      "size",
+      "thumbnail",
+      "category",
+    ])
     .lean();
 
   const filteredProducts = allProducts.filter((product) => {
@@ -91,4 +100,12 @@ export async function getProductsFilteredByCategories(categories) {
   });
 
   return replaceMongoIdInArray(filteredProducts);
+}
+// Filter by Size
+
+export async function getAllSizes() {
+  await connectMongo();
+  const allProducts = await productsModel.find().select(["size"]).lean();
+  const allSizes = [...new Set(allProducts.map((product) => product.size))];
+  return allSizes;
 }

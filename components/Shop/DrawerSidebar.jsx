@@ -2,7 +2,7 @@ import FilterByCategory from "./Filter/FilterByCategory";
 import FilterByPrice from "./Filter/FilterByPrice";
 import FilterBySize from "./Filter/FilterBySize";
 
-const DrawerSidebar = ({categories}) => {
+const DrawerSidebar = ({allAvailableSizes, categories}) => {
   return (
     <div
       id="drawer-example"
@@ -51,7 +51,7 @@ const DrawerSidebar = ({categories}) => {
       <div className="divide-y divide-gray-200 space-y-5">
         <FilterByCategory categories={categories}/>
         <FilterByPrice/>
-        <FilterBySize/> 
+        <FilterBySize allAvailableSizes={allAvailableSizes}/> 
       </div> 
     </div>
   );

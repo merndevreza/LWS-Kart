@@ -4,20 +4,23 @@ import {
 } from "@/database/queries/queries";
 import ProductCard from "../Products/ProductCard";
 
-const ShopProducts = async ({ search, category }) => {
+const ShopProducts = async ({ search, category, size }) => {
   let products = [];
-
-  if (category && search) {
-    products = await getProductsFilteredByCategories(category);
-  } else if (search) {
-    products = await getAllProducts(search);
-  } else if (category) {
-    products = await getProductsFilteredByCategories(category);
-  } else {
-    products = await getAllProducts();
-  }
-
+  products = await getAllProducts();
   
+  if (search) {
+    products = await getAllProducts(search);
+  }
+  if (category) {
+    products = await getProductsFilteredByCategories(category);
+  }
+  if (size) {
+    products = products.filter((product) => {
+      if (product.size === size) {
+        return product;
+      }
+    });
+  }
   return (
     <div className="col-span-3">
       <div className="grid md:grid-cols-3 grid-cols-2 gap-6">
