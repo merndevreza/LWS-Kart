@@ -36,7 +36,7 @@ const Search = ({ dictionary }) => {
         <FontAwesomeIcon icon={faMagnifyingGlass} />
       </span>
       <input
-        type="text"
+        type="search"
         name="search"
         id="search"
         value={searchTerm}

@@ -9,14 +9,14 @@ const refinedCategory = (category) => {
   }
   return decodedCategory;
 };
-const ShopPage = async ({ searchParams: { category,search,size } }) => {
+const ShopPage = async ({ searchParams: { category,search,size,min,max } }) => {
 
   return (
     <main>
       <BreadCrumb pageTitle="Shop" />
       <div className="container grid md:grid-cols-4 grid-cols-2 gap-6 pt-4 pb-16 items-start">
         <ShopSidebar />
-        <ShopProducts size={size} category={refinedCategory(category)} search={search}/>
+        <ShopProducts min={min} max={max} size={size} category={refinedCategory(category)} search={search}/>
       </div>
     </main>
   );

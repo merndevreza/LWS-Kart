@@ -4,15 +4,22 @@ import {
 } from "@/database/queries/queries";
 import ProductCard from "../Products/ProductCard";
 
-const ShopProducts = async ({ search, category, size }) => {
+const ShopProducts = async ({ search, category, size, min, max }) => {
   let products = [];
   products = await getAllProducts();
-  
+
   if (search) {
     products = await getAllProducts(search);
   }
   if (category) {
     products = await getProductsFilteredByCategories(category);
+  }
+  if (min && max) {
+    products = products.filter((product) => {
+      if (product.discountPrice > min && product.discountPrice < max) {
+        return product;
+      }
+    });
   }
   if (size) {
     products = products.filter((product) => {

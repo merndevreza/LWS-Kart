@@ -23,7 +23,6 @@ const FilterBySize = ({allAvailableSizes }) => {
 
   useEffect(() => {
     const sizeInParams = searchParams.get("size");
-
     if (sizeInParams) {
       setQuery(sizeInParams);
     }
