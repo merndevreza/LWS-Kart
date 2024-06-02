@@ -7,11 +7,7 @@ import { getProductById } from "@/database/queries/queries";
 
 const ProductDetailsPage = async({params:{productId}}) => {
    const product=await getProductById(productId)
-<<<<<<< HEAD
    
-=======
-   console.log(product);
->>>>>>> 19be63f902a461adc8c02d1f9c9f14c9f3fe72df
   return (
     <main>
       <BreadCrumb pageTitle="Product" />
