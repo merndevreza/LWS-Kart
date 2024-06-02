@@ -8,13 +8,15 @@ const CategoryMenu = async ({ dictionary }) => {
   const categories = await getAllCategories();
 
   return (
-    <div className="px-8 py-4 bg-primary md:flex categorys-center cursor-pointer relative group hidden">
+    <div className="px-8 py-4 bg-primary md:flex category-center cursor-pointer relative group hidden">
+      <div className="flex items-center">
       <span className="text-white">
         <FontAwesomeIcon icon={faBars} />
       </span>
       <span className="capitalize ml-2 text-white">
         {dictionary.allCategories}
       </span>
+      </div>
 
       <div className="absolute left-0 top-full bg-white shadow-md py-3 divide-y divide-gray-300 divide-dashed opacity-0 group-hover:opacity-100 transition duration-300 invisible group-hover:visible w-[600px] z-40">
         {categories.map((category) => (

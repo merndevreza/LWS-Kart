@@ -2,7 +2,7 @@ import FilterByCategory from "./Filter/FilterByCategory";
 import FilterByPrice from "./Filter/FilterByPrice";
 import FilterBySize from "./Filter/FilterBySize";
 
-const DrawerSidebar = () => {
+const DrawerSidebar = ({categories}) => {
   return (
     <div
       id="drawer-example"
@@ -49,7 +49,7 @@ const DrawerSidebar = () => {
         <span className="sr-only">Close menu</span>
       </button>
       <div className="divide-y divide-gray-200 space-y-5">
-        <FilterByCategory/>
+        <FilterByCategory categories={categories}/>
         <FilterByPrice/>
         <FilterBySize/> 
       </div> 

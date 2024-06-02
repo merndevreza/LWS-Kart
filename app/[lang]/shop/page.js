@@ -1,30 +1,22 @@
 import BreadCrumb from "@/components/BreadCrumb";
 import ShopProducts from "@/components/Shop/ShopProducts";
 import ShopSidebar from "@/components/Shop/ShopSidebar";
-import {
-  getAllProducts, 
-  getProductsByCategoryName,
-} from "@/database/queries/queries";
 
-const ShopPage = async ({ searchParams: { category,search } }) => {
-  let products = [];
+const refinedCategory = (category) => {
+  const decodedCategory = decodeURI(category);
 
-  if (category && search) {
-    products = await getAllProducts(search);
-  } else if(search) {
-    products = await getAllProducts(search);
-  } else if(category) {
-    products = await getProductsByCategoryName(category);
-  }else{
-    products = await getAllProducts();
+  if (decodedCategory === "undefined") {
+    return "";
   }
-
+  return decodedCategory;
+};
+const ShopPage = async ({ searchParams: { category,search } }) => {
   return (
     <main>
       <BreadCrumb pageTitle="Shop" />
       <div className="container grid md:grid-cols-4 grid-cols-2 gap-6 pt-4 pb-16 items-start">
         <ShopSidebar />
-        <ShopProducts products={products} />
+        <ShopProducts category={refinedCategory(category)} search={search}/>
       </div>
     </main>
   );

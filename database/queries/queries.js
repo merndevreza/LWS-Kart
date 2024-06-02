@@ -12,11 +12,10 @@ import { categoryModel } from "../models/category-model";
 export async function getAllProducts(search) {
   await connectMongo();
   const regex = new RegExp(search, "i");
-  console.log("checking search params", search,regex);
   const products = await productsModel
     .find({ title: { $regex: regex } })
     .select(["title", "discountPrice", "price", "thumbnail"])
-    .lean(); 
+    .lean();
   return replaceMongoIdInArray(products);
 }
 
@@ -61,8 +60,7 @@ export async function getAllCategories(totalCategoryNeed) {
 
   return replaceMongoIdInArray(categories);
 }
-
-
+//for related products
 export async function getProductsByCategoryName(categoryName) {
   await connectMongo();
   const regex = new RegExp(categoryName, "i");
@@ -78,4 +76,19 @@ export async function getProductsByCategoryName(categoryName) {
     .lean();
 
   return replaceMongoIdInArray(products);
+}
+
+export async function getProductsFilteredByCategories(categories) {
+  const categoriesToMatch = categories.split("|");
+
+  const allProducts = await productsModel
+    .find()
+    .select(["title", "discountPrice", "price", "thumbnail", "category"])
+    .lean();
+
+  const filteredProducts = allProducts.filter((product) => {
+    return categoriesToMatch.includes(product.category);
+  });
+
+  return replaceMongoIdInArray(filteredProducts);
 }

@@ -24,13 +24,9 @@ const Search = ({ dictionary }) => {
     params.set("search", searchTerm);
 
     const query = params.toString();
-    if (pathname.includes("/shop")) {
-      router.replace(`${pathname}?${query}`);
-    } else {
-      router.replace(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/${locale}/shop?${query}`
-      );
-    } 
+    router.replace(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/${locale}/shop?${query}`
+    );
     setSearchTerm("")
   };
 
