@@ -2,6 +2,7 @@
 import { signIn } from "@/auth";
 import { userModel } from "@/database/models/users-model";
 import connectMongo from "@/database/services/connectMongo";
+import mongoose from "mongoose";
 
 export async function credentialLogin(formData) {
   try {
@@ -24,14 +25,16 @@ export async function doSocialLogin(formData) {
 
 export async function addToCart(userId, productId, quantity) {
   try {
-    await connectMongo(); 
+    await connectMongo();
 
-    const user = await userModel.findById(userId); 
+    const user = await userModel.findById(userId);
     if (!user) {
       throw new Error("User not found");
     }
 
-    const productInCart = user.cart.find(item => item.productId.toString() === productId);
+    const productInCart = user.cart.find(
+      (item) => item.productId.toString() === productId
+    );
 
     if (productInCart) {
       productInCart.quantity += quantity;
@@ -49,14 +52,17 @@ export async function addToCart(userId, productId, quantity) {
 }
 export async function addToWishlist(userId, productId) {
   try {
-    await connectMongo(); 
+    await connectMongo();
 
-    const user = await userModel.findById(userId); 
+    const user = await userModel.findById(userId);
     if (!user) {
       throw new Error("User not found");
     }
 
-    const productInWishlist = user.wishlist.find(item => item.productId.toString() === productId);
+    const productInWishlist = user.wishlist.find(
+      (item) => item.productId.toString() === productId
+    );
+    console.log(productInWishlist);
 
     if (!productInWishlist) {
       user.wishlist.push({ productId });
@@ -65,6 +71,36 @@ export async function addToWishlist(userId, productId) {
     return { success: true, message: "Product added to Wishlist" };
   } catch (error) {
     console.error("Error adding product to Wishlist:", error);
+    return { success: false, message: error.message };
+  }
+}
+
+export async function removeFromWishlist(userId, productId) {
+  try {
+    await connectMongo();
+
+    const user = await userModel.findById(userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // const productObjectId = mongoose.Types.ObjectId(productId);
+
+    const initialWishlistLength = user.wishlist.length;
+
+    user.wishlist = user.wishlist.filter(
+      (item) => item.productId.toString() !== productId
+    );
+
+    if (user.wishlist.length === initialWishlistLength) {
+      return { success: false, message: "Product not found in Wishlist" };
+    }
+
+    await user.save();
+
+    return { success: true, message: "Product removed from Wishlist" };
+  } catch (error) {
+    console.error("Error removing product from Wishlist:", error);
     return { success: false, message: error.message };
   }
 }

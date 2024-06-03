@@ -1,9 +1,10 @@
+"use client"
 import Image from "next/image";
-import AddToCartBtn from "../Products/AddToCartBtn";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import AddToCartBtn from "../Products/AddToCartBtn"; 
+import WishlistDeleteBtn from "./WishlistDeleteBtn"; 
 
 const WishListCard = ({ product,userId }) => {
+
   return (
     <div className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
       <div className="w-28">
@@ -31,9 +32,8 @@ const WishListCard = ({ product,userId }) => {
       <div className="text-primary text-lg font-semibold">${product?.discountPrice}</div>
 
       <AddToCartBtn stock={product?.stock} userId={userId} productId={product?.id} quantity={1} wishListCard={true} />
-      <div className="text-gray-600 cursor-pointer hover:text-primary">
-        <FontAwesomeIcon icon={faTrash} />
-      </div>
+
+     <WishlistDeleteBtn userId={userId} productId={product?.id}/>
     </div>
   );
 };
