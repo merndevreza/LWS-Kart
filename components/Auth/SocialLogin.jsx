@@ -9,8 +9,7 @@ const SocialLogin = ({ title }) => {
         </div>
         <div className="absolute left-0 top-3 w-full border-b-2 border-gray-200"></div>
       </div>
-      <div className="mt-4 flex gap-4">
-        <form action={doSocialLogin}>
+      <form action={doSocialLogin} className="mt-4 flex gap-4">
           <button
             type="submit"
             name="action"
@@ -28,7 +27,6 @@ const SocialLogin = ({ title }) => {
             google
           </button>
         </form>
-      </div>
     </>
   );
 };

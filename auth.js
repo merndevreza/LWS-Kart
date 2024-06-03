@@ -1,5 +1,7 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
+
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import CredentialProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
@@ -94,6 +96,10 @@ export const {
         },
       },
     }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET
+    })
   ],
   callbacks: {
     async jwt({ token, user, account }) {

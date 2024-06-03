@@ -13,7 +13,7 @@ const FilterByCategory = ({ categories }) => {
   const params = new URLSearchParams(searchParams);
 
   const handleChange = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     const name = event.target.name;
     const checked = event.target.checked;
 
@@ -42,7 +42,7 @@ const FilterByCategory = ({ categories }) => {
       params.delete("category");
     }
     replace(`${pathname}?${params.toString()}`);
-  }, [query, pathname, replace]);
+  }, [query, pathname, replace]); 
 
   return (
     <div>
