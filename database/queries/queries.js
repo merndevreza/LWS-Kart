@@ -7,6 +7,7 @@ import connectMongo from "../services/connectMongo";
 import { salesModel } from "../models/sales-model";
 import { categoryModel } from "../models/category-model";
 import { reviewModel } from "../models/review-model";
+import { userModel } from "../models/users-model";
 
 //products
 export async function getAllProducts(search) {
@@ -14,7 +15,7 @@ export async function getAllProducts(search) {
   const regex = new RegExp(search, "i");
   const products = await productsModel
     .find({ title: { $regex: regex } })
-    .select(["title", "discountPrice", "price", "size", "thumbnail"])
+    .select(["title","stock", "discountPrice", "price", "size", "thumbnail"])
     .lean();
   return replaceMongoIdInArray(products);
 }
@@ -26,7 +27,7 @@ export async function getLatestProducts(totalProductsNeed) {
     .find()
     .sort({ createdAt: -1 })
     .limit(totalProductsNeed)
-    .select(["title", "discountPrice", "price", "thumbnail"])
+    .select(["title","stock", "discountPrice", "price", "thumbnail"])
     .lean();
 
   return replaceMongoIdInArray(products);
@@ -40,7 +41,7 @@ export async function getTrendingProducts(totalProductsNeed) {
   const products = await productsModel
     .find({ _id: { $in: productIds } })
     .limit(totalProductsNeed)
-    .select(["title", "discountPrice", "price", "thumbnail"])
+    .select(["title","stock", "discountPrice", "price", "thumbnail"])
     .lean();
 
   return replaceMongoIdInArray(products);
@@ -81,7 +82,7 @@ export async function getProductsByCategoryName(categoryName) {
 
   const products = await productsModel
     .find({ _id: { $in: productsId } })
-    .select(["title", "discountPrice", "price", "thumbnail"])
+    .select(["title","stock", "discountPrice", "price", "thumbnail"])
     .lean();
 
   return replaceMongoIdInArray(products);
@@ -117,4 +118,17 @@ export async function getAllSizes() {
   const allProducts = await productsModel.find().select(["size"]).lean();
   const allSizes = [...new Set(allProducts.map((product) => product.size))];
   return allSizes;
+}
+//wishlist
+
+export async function getWishlistProducts(userId) {
+  await connectMongo();
+  const user = await userModel.findById(userId).select(["wishlist"]).lean();
+  const productsId = user.wishlist.map((item) => item.productId);  
+  const products = await productsModel
+    .find({ _id: { $in: productsId } })
+    .select(["title","stock", "discountPrice", "price", "thumbnail"])
+    .lean();
+
+  return replaceMongoIdInArray(products);
 }

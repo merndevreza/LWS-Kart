@@ -1,14 +1,14 @@
-import {
-  faHeart,
-  faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import LinkWithLocale from "../LinkWithLocale";
 import AddToCartBtn from "./AddToCartBtn";
 import AverageRating from "./AverageRating";
+import { auth } from "@/auth";
+import AddWishlistBtn from "./AddWishlistBtn";
 
-const ProductCard = ({ product }) => {
+const ProductCard = async ({ product }) => {
+  const session = await auth();
   return (
     <div className="bg-white shadow rounded overflow-hidden group">
       <div className="relative">
@@ -31,14 +31,11 @@ const ProductCard = ({ product }) => {
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </span>
           </LinkWithLocale>
-          <LinkWithLocale href="#">
-            <span
-              className="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-              title="add to wishlist"
-            >
-              <FontAwesomeIcon icon={faHeart} />
-            </span>
-          </LinkWithLocale>
+          <AddWishlistBtn
+            userId={session?.user?.id}
+            productId={product?.id}
+            card={true}
+          />
         </div>
       </div>
       <div className="pt-4 pb-3 px-4">
@@ -55,10 +52,14 @@ const ProductCard = ({ product }) => {
             ${product?.price}
           </p>
         </div>
-        <AverageRating  productId={product?.id}/>
-      </div> 
-      <AddToCartBtn productId={product?.id} productCard={true}/> 
-       
+        <AverageRating productId={product?.id} />
+      </div>
+      <AddToCartBtn
+        userId={session?.user?.id}
+        productId={product?.id}
+        stock={product?.stock} 
+        productCard={true}
+      />
     </div>
   );
 };

@@ -40,8 +40,7 @@ const FilterByPrice = () => {
       params.delete("max");
     }
     replace(`${pathname}?${params.toString()}`);
-  }, [query,pathname,replace]);
-console.log(query);
+  }, [query,pathname,replace]); 
   return (
     <div className="pt-4">
       <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">
