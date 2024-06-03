@@ -1,62 +1,22 @@
 [
-   {
-       "productId": "",
-       "userId": "",
-       "rating": 5,
-       "review": "Absolutely love this product! Exceeded my expectations in every way."
-   },
-   {
-       "productId": "",
-       "userId": "",
-       "rating": 4,
-       "review": "Great quality, but the shipping took longer than expected."
-   },
-   {
-       "productId": "",
-       "userId": "",
-       "rating": 3,
-       "review": "The product is okay, but it could be improved in terms of durability."
-   },
-   {
-       "productId": "",
-       "userId": "",
-       "rating": 2,
-       "review": "Not very satisfied with the quality. It feels cheaply made."
-   },
-   {
-       "productId": "",
-       "userId": "",
-       "rating": 5,
-       "review": "Excellent! Highly recommend to anyone looking for a reliable product."
-   },
-   {
-       "productId": "",
-       "userId": "",
-       "rating": 4,
-       "review": "Good product overall, but there are a few minor issues."
-   },
-   {
-       "productId": "",
-       "userId": "",
-       "rating": 1,
-       "review": "Very disappointed. The product broke after just one use."
-   },
-   {
-       "productId": "",
-       "userId": "",
-       "rating": 5,
-       "review": "Fantastic quality and fast shipping. Will buy again!"
-   },
-   {
-       "productId": "",
-       "userId": "",
-       "rating": 3,
-       "review": "It's an average product. Not too bad, but not great either."
-   },
-   {
-       "productId": "",
-       "userId": "",
-       "rating": 4,
-       "review": "Pretty good product, but the instructions were a bit confusing."
-   }
+  {
+    "productId": {
+      "$oid": "665949f2f3e128d10efe17c9"
+    },
+    "userId": {
+      "$oid": "6657fd1cd4b1ec9abeb160de"
+    },
+    "rating": 5,
+    "review": "Absolutely love this product! Exceeded my expectations in every way."
+  },
+  {
+    "productId": {
+      "$oid": "665949f2f3e128d10efe17c9"
+    },
+    "userId": {
+      "$oid": "6657ff6ad4b1ec9abeb160e1"
+    },
+    "rating": 5,
+    "review": "Absolutely love this product! Exceeded my expectations in every way."
+  }
 ]

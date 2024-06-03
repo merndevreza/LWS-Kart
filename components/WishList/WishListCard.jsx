@@ -23,7 +23,7 @@ const WishListCard = () => {
       </div>
       <div className="text-primary text-lg font-semibold">$320.00</div>
 
-      <AddToCartBtn sizeSmall={true} />
+      <AddToCartBtn wishListCard={true} />
       <div className="text-gray-600 cursor-pointer hover:text-primary">
         <FontAwesomeIcon icon={faTrash} /> 
       </div>

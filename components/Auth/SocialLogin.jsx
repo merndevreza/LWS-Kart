@@ -1,5 +1,3 @@
-"use client";
-
 import { doSocialLogin } from "@/app/actions"; 
 
 const SocialLogin = ({ title }) => { 

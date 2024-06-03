@@ -7,6 +7,7 @@ import LinkWithLocale from "../LinkWithLocale";
 const LoginForm = ({ dictionary }) => {
   const [error, setError] = useState("");
   const router = useRouter();
+  
   const onSubmit = async (event) => {
     event.preventDefault();
     try {

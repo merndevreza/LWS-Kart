@@ -1,0 +1,42 @@
+[
+  {
+    "userId": {
+      "$oid": "6657fd1cd4b1ec9abeb160de"
+    },
+    "userEmail": "tanjila@gmail.com",
+    "products": [
+      {
+        "productId": {
+          "$oid": "665949f2f3e128d10efe17c8"
+        },
+        "quantity": 2
+      },
+      {
+        "productId": {
+          "$oid": "665949f2f3e128d10efe17c9"
+        },
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "userId": {
+      "$oid": "66581cecd4b1ec9abeb160e8"
+    },
+    "userEmail": "rezaulkarimpstu@gmail.com",
+    "products": [
+      {
+        "productId": {
+          "$oid": "665949f2f3e128d10efe17c8"
+        },
+        "quantity": 4
+      },
+      {
+        "productId": {
+          "$oid": "665949f2f3e128d10efe17c9"
+        },
+        "quantity": 7
+      }
+    ]
+  }
+]

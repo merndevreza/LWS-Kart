@@ -18,7 +18,6 @@ export default async function LoginPage({params:{lang}}) {
           {dictionary.doNotHaveAccount}
           <LinkWithLocale href="/register">
             <span className="text-primary">{dictionary.registerNow}</span>
-            
           </LinkWithLocale>
         </p>
       </div>

@@ -1,11 +1,12 @@
 import {
   faHeart,
   faMagnifyingGlass,
-  faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import LinkWithLocale from "../LinkWithLocale";
+import AddToCartBtn from "./AddToCartBtn";
+import AverageRating from "./AverageRating";
 
 const ProductCard = ({ product }) => {
   return (
@@ -54,32 +55,10 @@ const ProductCard = ({ product }) => {
             ${product?.price}
           </p>
         </div>
-        <div className="flex items-center">
-          <div className="flex gap-1 text-sm text-yellow-400">
-            <span>
-              <FontAwesomeIcon icon={faStar} />
-            </span>
-            <span>
-              <FontAwesomeIcon icon={faStar} />
-            </span>
-            <span>
-              <FontAwesomeIcon icon={faStar} />
-            </span>
-            <span>
-              <FontAwesomeIcon icon={faStar} />
-            </span>
-            <span>
-              <FontAwesomeIcon icon={faStar} />
-            </span>
-          </div>
-          <div className="text-xs text-gray-500 ml-3">(150)</div>
-        </div>
-      </div>
-      <LinkWithLocale href="#">
-        <span className="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
-          Add to cart
-        </span>
-      </LinkWithLocale>
+        <AverageRating  productId={product?.id}/>
+      </div> 
+      <AddToCartBtn productId={product?.id} productCard={true}/> 
+       
     </div>
   );
 };

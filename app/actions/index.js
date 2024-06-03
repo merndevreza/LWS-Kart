@@ -18,5 +18,9 @@ export async function credentialLogin(formData) {
 
 export async function doSocialLogin(formData) {
   const action = formData.get("action");
-  await signIn(action, { callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}` });
+  await signIn(action, { callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/` });
+}
+
+export async function updateProfile(formData,userId){
+
 }

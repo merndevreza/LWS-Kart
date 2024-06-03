@@ -6,9 +6,9 @@ import { productsModel } from "../models/products-model";
 import connectMongo from "../services/connectMongo";
 import { salesModel } from "../models/sales-model";
 import { categoryModel } from "../models/category-model";
+import { reviewModel } from "../models/review-model";
 
 //products
-
 export async function getAllProducts(search) {
   await connectMongo();
   const regex = new RegExp(search, "i");
@@ -51,6 +51,15 @@ export async function getProductById(id) {
 
   const product = await productsModel.findById(id).lean();
   return replaceMongoIdInObject(product);
+}
+//review
+export async function getAllReviewsByProductId(productId) {
+  await connectMongo();
+  const reviews = await reviewModel
+    .find({ productId })
+    .select(["rating"])
+    .lean();
+  return replaceMongoIdInArray(reviews);
 }
 //category
 export async function getAllCategories(totalCategoryNeed) {

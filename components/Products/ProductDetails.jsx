@@ -23,7 +23,7 @@ const ProductDetails = ({product}) => {
       </div>
 
       <div className="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
-        <AddToCartBtn />
+        <AddToCartBtn productDetails={true} productId={product?.id}/>
         <AddWishlistBtn />
       </div>
 

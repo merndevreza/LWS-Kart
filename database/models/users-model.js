@@ -1,29 +1,30 @@
 import mongoose, { Schema } from "mongoose";
 
 const userSchema = new Schema({
-  name: {
-    required: true,
-    type: String,
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  phone: { type: String, required: true },
+  password: { type: String, required: true },
+  wishlist: [{ type: Schema.Types.ObjectId, ref: "Product" }],
+  cart: [
+    {
+      productId: { type: Schema.Types.ObjectId, ref: "Product" },
+      quantity: { type: Number, required: true },
+    },
+  ],
+  shippingAddress: {
+    street: String,
+    city: String,
+    state: String,
+    zip: String,
+    phone: String,
   },
-  email: {
-    required: true,
-    type: String,
-  },
-  phone: {
-    required: false,
-    type: String,
-  },
-  password: {
-    required: true,
-    type: String,
-  },
-  wishlist: {
-    required: false,
-    type: Array,
-  },
-  cart: {
-    required: false,
-    type: Array,
+  billingAddress: {
+    street: String,
+    city: String,
+    state: String,
+    zip: String,
+    phone: String,
   },
 });
 

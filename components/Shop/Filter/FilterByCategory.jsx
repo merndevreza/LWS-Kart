@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const FilterByCategory = ({ categories }) => { 
+const FilterByCategory = ({ categories }) => {
   const [query, setQuery] = useState([]);
 
   const searchParams = useSearchParams();
@@ -13,7 +13,7 @@ const FilterByCategory = ({ categories }) => {
   const params = new URLSearchParams(searchParams);
 
   const handleChange = (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     const name = event.target.name;
     const checked = event.target.checked;
 
@@ -22,7 +22,7 @@ const FilterByCategory = ({ categories }) => {
     } else {
       const filtered = query.filter((item) => item !== name);
       setQuery(filtered);
-    } 
+    }
   };
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const FilterByCategory = ({ categories }) => {
       const decodedCategory = decodeURI(category);
       const queryInCategory = decodedCategory.split("|");
       setQuery(queryInCategory);
-    } 
+    }
   }, []);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const FilterByCategory = ({ categories }) => {
       params.delete("category");
     }
     replace(`${pathname}?${params.toString()}`);
-  }, [query]);
+  }, [query, pathname, replace]);
 
   return (
     <div>

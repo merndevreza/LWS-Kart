@@ -5,6 +5,7 @@ config.autoAddCss = false;
 import { Poppins, Roboto } from "next/font/google";
 import "./globals.css"; 
 import connectMongo from "@/database/services/connectMongo";
+import AuthProvider from "./contextProvider/providers/AuthProvider";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -30,7 +31,9 @@ await connectMongo()
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${roboto.variable}`}> 
+      <AuthProvider>
         {children} 
+      </AuthProvider>
       </body>
     </html>
   );

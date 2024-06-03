@@ -1,29 +1,13 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AverageRating from "./AverageRating";
 
 const ProductSummary = ({ product }) => {
   return (
     <>
       <h2 className="text-3xl font-medium uppercase mb-2">{product?.title}</h2>
-      <div className="flex items-center mb-4">
-        <div className="flex gap-1 text-sm text-yellow-400">
-          <span>
-            <FontAwesomeIcon icon={faStar} />
-          </span>
-          <span>
-            <FontAwesomeIcon icon={faStar} />
-          </span>
-          <span>
-            <FontAwesomeIcon icon={faStar} />
-          </span>
-          <span>
-            <FontAwesomeIcon icon={faStar} />
-          </span>
-          <span>
-            <FontAwesomeIcon icon={faStar} />
-          </span>
-        </div>
-        <div className="text-xs text-gray-500 ml-3">(150 Reviews)</div>
+      <div className="mb-2"> 
+      <AverageRating productId={product?.id} detailsPage={true}/>
       </div>
       <div className="space-y-2">
         <p className="text-gray-800 font-semibold space-x-2">

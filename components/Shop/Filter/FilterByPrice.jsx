@@ -40,7 +40,7 @@ const FilterByPrice = () => {
       params.delete("max");
     }
     replace(`${pathname}?${params.toString()}`);
-  }, [query]);
+  }, [query,pathname,replace]);
 console.log(query);
   return (
     <div className="pt-4">
