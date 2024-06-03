@@ -1,15 +1,16 @@
-import { auth } from "@/auth";
+import WishlistProvider from "@/app/contextProvider/providers/WishlistProvider";
 import BreadCrumb from "@/components/BreadCrumb";
 import WishList from "@/components/WishList/WishList";
 
 const WishlistPage = async () => {
-  const session = await auth();
   return (
     <main>
-      <BreadCrumb pageTitle="Wishlist" /> 
+      <BreadCrumb pageTitle="Wishlist" />
+      <WishlistProvider>
         <section className="container gap-6 pt-4 pb-16">
-          <WishList userId={session?.user?.id} />
-        </section> 
+          <WishList/>
+        </section>
+      </WishlistProvider>
     </main>
   );
 };

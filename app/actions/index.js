@@ -1,8 +1,7 @@
 "use server";
-import { signIn } from "@/auth";
+import { auth, signIn } from "@/auth";
 import { userModel } from "@/database/models/users-model";
-import connectMongo from "@/database/services/connectMongo";
-import mongoose from "mongoose";
+import connectMongo from "@/database/services/connectMongo"; 
 
 export async function credentialLogin(formData) {
   try {
@@ -23,11 +22,12 @@ export async function doSocialLogin(formData) {
   await signIn(action, { callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/` });
 }
 
-export async function addToCart(userId, productId, quantity) {
+export async function addToCart(productId, quantity) {
   try {
     await connectMongo();
+    const session=await auth()
 
-    const user = await userModel.findById(userId);
+    const user = await userModel.findById(session?.user?.id);
     if (!user) {
       throw new Error("User not found");
     }
@@ -50,11 +50,12 @@ export async function addToCart(userId, productId, quantity) {
     return { success: false, message: error.message };
   }
 }
-export async function addToWishlist(userId, productId) {
+export async function addToWishlist(productId) {
   try {
     await connectMongo();
 
-    const user = await userModel.findById(userId);
+    const session=await auth()
+    const user = await userModel.findById(session?.user?.id);
     if (!user) {
       throw new Error("User not found");
     }
@@ -75,11 +76,12 @@ export async function addToWishlist(userId, productId) {
   }
 }
 
-export async function removeFromWishlist(userId, productId) {
+export async function removeFromWishlist(productId) {
   try {
     await connectMongo();
+    const session=await auth()
 
-    const user = await userModel.findById(userId);
+    const user = await userModel.findById(session?.user?.id);
     if (!user) {
       throw new Error("User not found");
     }

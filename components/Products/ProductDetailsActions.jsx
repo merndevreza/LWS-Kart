@@ -3,7 +3,7 @@ import { useState } from "react";
 import AddToCartBtn from "./AddToCartBtn";
 import AddWishlistBtn from "./AddWishlistBtn";
 
-const ProductDetailsActions = ({ productId, userId,stock }) => {
+const ProductDetailsActions = ({ productId, stock }) => {
   const [quantity, setQuantity] = useState(1);
 
   const handleInputChange = (e) => {
@@ -50,15 +50,13 @@ const ProductDetailsActions = ({ productId, userId,stock }) => {
       </div>
 
       <div className="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
-        <AddToCartBtn
-          userId={userId}
+        <AddToCartBtn 
           productDetails={true}
           productId={productId}
           quantity={quantity}
           stock={stock} 
         />
-        <AddWishlistBtn
-          userId={userId}
+        <AddWishlistBtn 
           productId={productId}
           detailsPage={true}
         />

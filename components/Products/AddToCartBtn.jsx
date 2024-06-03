@@ -9,12 +9,11 @@ const AddToCartBtn = ({
   productDetails,
   productId,
   quantity,
-  userId,
   stock,
 }) => {
   const handleAddToCart = async () => {
     try {
-      const result = await addToCart(userId, productId, quantity);
+      const result = await addToCart(productId, quantity);
       if (result.success) {
         console.log("Product added to cart");
       } else {

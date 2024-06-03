@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { WishlistContext } from "../contextProvider/contexts";
 
 export default function useWishlist(){

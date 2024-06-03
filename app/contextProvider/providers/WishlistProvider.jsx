@@ -1,18 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
-import { WishlistContext } from "../contexts";
-import { auth } from "@/auth";
+import { WishlistContext } from "../contexts"; 
+import { getWishlistProducts } from "@/database/queries/queries";
 
 const WishlistProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
-  // useEffect(() => {
-  //   async function getProducts() {
-  //     const session = await auth();
-  //     const result = await getWishlistProducts(session?.user?.id);
-  //     setProducts(result);
-  //   }
-  //   getProducts();
-  // }, []);
+  useEffect(() => {
+    async function getProducts() {
+      const result = await getWishlistProducts();
+      setProducts(result);
+    }
+    getProducts();
+  }, []);
   return (
     <WishlistContext.Provider value={{ products, setProducts }}>
       {children}

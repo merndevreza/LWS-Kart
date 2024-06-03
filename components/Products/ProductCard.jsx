@@ -7,8 +7,7 @@ import AverageRating from "./AverageRating";
 import { auth } from "@/auth";
 import AddWishlistBtn from "./AddWishlistBtn";
 
-const ProductCard = async ({ product }) => {
-  const session = await auth();
+const ProductCard = async ({ product }) => { 
   return (
     <div className="bg-white shadow rounded overflow-hidden group">
       <div className="relative">
@@ -32,7 +31,6 @@ const ProductCard = async ({ product }) => {
             </span>
           </LinkWithLocale>
           <AddWishlistBtn
-            userId={session?.user?.id}
             productId={product?.id}
             card={true}
           />
@@ -55,7 +53,6 @@ const ProductCard = async ({ product }) => {
         <AverageRating productId={product?.id} />
       </div>
       <AddToCartBtn
-        userId={session?.user?.id}
         productId={product?.id}
         stock={product?.stock} 
         productCard={true}

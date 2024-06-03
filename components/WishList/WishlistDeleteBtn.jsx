@@ -5,13 +5,16 @@ import { removeFromWishlist } from "@/app/actions";
 import { getWishlistProducts } from "@/database/queries/queries";
 import useWishlist from "@/app/hooks/useWishlist";
 
-const WishlistDeleteBtn = ({ userId, productId }) => {
+const WishlistDeleteBtn = ({ productId }) => {
    const {setProducts}=useWishlist()
+
   const handleRemove = async () => {
     try {
-      const result = await removeFromWishlist(userId, productId);
+
+      const result = await removeFromWishlist( productId);
+
       if (result.success) {
-         const response = await getWishlistProducts(userId);
+         const response = await getWishlistProducts();
          setProducts(response);
         console.log("Product removed from Wishlist");
       } else {

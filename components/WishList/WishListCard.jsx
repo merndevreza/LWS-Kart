@@ -3,7 +3,7 @@ import Image from "next/image";
 import AddToCartBtn from "../Products/AddToCartBtn"; 
 import WishlistDeleteBtn from "./WishlistDeleteBtn"; 
 
-const WishListCard = ({ product,userId }) => {
+const WishListCard = ({ product }) => {
 
   return (
     <div className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
@@ -31,9 +31,9 @@ const WishListCard = ({ product,userId }) => {
       </div>
       <div className="text-primary text-lg font-semibold">${product?.discountPrice}</div>
 
-      <AddToCartBtn stock={product?.stock} userId={userId} productId={product?.id} quantity={1} wishListCard={true} />
+      <AddToCartBtn stock={product?.stock} productId={product?.id} quantity={1} wishListCard={true} />
 
-     <WishlistDeleteBtn userId={userId} productId={product?.id}/>
+     <WishlistDeleteBtn productId={product?.id}/>
     </div>
   );
 };

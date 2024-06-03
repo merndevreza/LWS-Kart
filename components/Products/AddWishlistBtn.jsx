@@ -3,10 +3,10 @@ import { addToWishlist } from "@/app/actions";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const AddWishlistBtn = ({ detailsPage, card, productId, userId }) => {
+const AddWishlistBtn = ({ detailsPage, card, productId}) => {
   const handleAddWishlist = async () => {
     try {
-      const result = await addToWishlist(userId, productId);
+      const result = await addToWishlist( productId);
       if (result.success) {
         console.log("Product added to Wishlist");
       } else {

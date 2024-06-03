@@ -5,13 +5,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LinkWithLocale from "../LinkWithLocale";
-import { auth } from "@/auth";
 import { getWishlistProducts } from "@/database/queries/queries";
 
 const Actions = async ({ dictionary }) => {
-  const session = await auth();
-  const userWishlist=await getWishlistProducts(session?.user?.id)
-  console.log(session?.user);
+  const userWishlist=await getWishlistProducts()
   return (
     <div className="flex items-center space-x-4">
       <LinkWithLocale href="/shop/wishlist">

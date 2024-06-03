@@ -1,3 +1,4 @@
+"use server"
 import {
   replaceMongoIdInArray,
   replaceMongoIdInObject,
@@ -8,6 +9,7 @@ import { salesModel } from "../models/sales-model";
 import { categoryModel } from "../models/category-model";
 import { reviewModel } from "../models/review-model";
 import { userModel } from "../models/users-model";
+import { auth } from "@/auth";
 
 //products
 export async function getAllProducts(search) {
@@ -121,9 +123,10 @@ export async function getAllSizes() {
 }
 //wishlist
 
-export async function getWishlistProducts(userId) {
-  await connectMongo();
-  const user = await userModel.findById(userId).select(["wishlist"]).lean();
+export async function getWishlistProducts() {
+  await connectMongo(); 
+  const session=await auth();
+  const user = await userModel.findById(session?.user?.id).select(["wishlist"]).lean();
   const productsId = user.wishlist.map((item) => item.productId);  
   const products = await productsModel
     .find({ _id: { $in: productsId } })
