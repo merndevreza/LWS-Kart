@@ -1,6 +1,7 @@
-"use server"
+"use server";
 import {
-  replaceMongoIdInArray,
+  convertMongoIdToString,
+  replaceMongoIdInArray, 
   replaceMongoIdInObject,
 } from "@/utils/replaceMongoId";
 import { productsModel } from "../models/products-model";
@@ -11,13 +12,20 @@ import { reviewModel } from "../models/review-model";
 import { userModel } from "../models/users-model";
 import { auth } from "@/auth";
 
+//User
+export async function getUserFullInfo() {
+  await connectMongo();
+  const session = await auth();
+  const user = await userModel.findById(session?.user?.id).lean();
+  return convertMongoIdToString(user);
+}
 //products
 export async function getAllProducts(search) {
   await connectMongo();
   const regex = new RegExp(search, "i");
   const products = await productsModel
     .find({ title: { $regex: regex } })
-    .select(["title","stock", "discountPrice", "price", "size", "thumbnail"])
+    .select(["title", "stock", "discountPrice", "price", "size", "thumbnail"])
     .lean();
   return replaceMongoIdInArray(products);
 }
@@ -29,7 +37,7 @@ export async function getLatestProducts(totalProductsNeed) {
     .find()
     .sort({ createdAt: -1 })
     .limit(totalProductsNeed)
-    .select(["title","stock", "discountPrice", "price", "thumbnail"])
+    .select(["title", "stock", "discountPrice", "price", "thumbnail"])
     .lean();
 
   return replaceMongoIdInArray(products);
@@ -43,7 +51,7 @@ export async function getTrendingProducts(totalProductsNeed) {
   const products = await productsModel
     .find({ _id: { $in: productIds } })
     .limit(totalProductsNeed)
-    .select(["title","stock", "discountPrice", "price", "thumbnail"])
+    .select(["title", "stock", "discountPrice", "price", "thumbnail"])
     .lean();
 
   return replaceMongoIdInArray(products);
@@ -84,7 +92,7 @@ export async function getProductsByCategoryName(categoryName) {
 
   const products = await productsModel
     .find({ _id: { $in: productsId } })
-    .select(["title","stock", "discountPrice", "price", "thumbnail"])
+    .select(["title", "stock", "discountPrice", "price", "thumbnail"])
     .lean();
 
   return replaceMongoIdInArray(products);
@@ -124,13 +132,16 @@ export async function getAllSizes() {
 //wishlist
 
 export async function getWishlistProducts() {
-  await connectMongo(); 
-  const session=await auth();
-  const user = await userModel.findById(session?.user?.id).select(["wishlist"]).lean();
-  const productsId = user.wishlist.map((item) => item.productId);  
+  await connectMongo();
+  const session = await auth();
+  const user = await userModel
+    .findById(session?.user?.id)
+    .select(["wishlist"])
+    .lean();
+  const productsId = user.wishlist.map((item) => item.productId);
   const products = await productsModel
     .find({ _id: { $in: productsId } })
-    .select(["title","stock", "discountPrice", "price", "thumbnail"])
+    .select(["title", "stock", "discountPrice", "price", "thumbnail"])
     .lean();
 
   return replaceMongoIdInArray(products);

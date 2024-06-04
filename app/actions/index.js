@@ -86,8 +86,6 @@ export async function removeFromWishlist(productId) {
       throw new Error("User not found");
     }
 
-    // const productObjectId = mongoose.Types.ObjectId(productId);
-
     const initialWishlistLength = user.wishlist.length;
 
     user.wishlist = user.wishlist.filter(

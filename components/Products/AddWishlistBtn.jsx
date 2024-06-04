@@ -1,13 +1,29 @@
 "use client";
 import { addToWishlist } from "@/app/actions";
+import useAuth from "@/app/hooks/useAuth";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const AddWishlistBtn = ({ detailsPage, card, productId}) => {
+const AddWishlistBtn = ({ detailsPage, card, productId }) => {
+  const { wishlist, setWishlist } = useAuth();
+
+  const insertUniqId = (arr, id) => {
+    const exists = arr.some((item) => item.productId === id);
+    if (!exists) {
+      return [...arr, { productId: id }];
+    }
+    return arr;
+  };
+
   const handleAddWishlist = async () => {
     try {
-      const result = await addToWishlist( productId);
+      const result = await addToWishlist(productId);
+
+      
       if (result.success) {
+        const updatedList = insertUniqId(wishlist, productId); 
+        setWishlist(updatedList);
+
         console.log("Product added to Wishlist");
       } else {
         console.error("Failed to add product to Wishlist:", result.message);

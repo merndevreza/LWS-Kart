@@ -1,3 +1,4 @@
+"use client";
 import {
   faBagShopping,
   faHeart,
@@ -5,10 +6,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LinkWithLocale from "../LinkWithLocale";
-import { getWishlistProducts } from "@/database/queries/queries";
+import useAuth from "@/app/hooks/useAuth";
 
-const Actions = async ({ dictionary }) => {
-  const userWishlist=await getWishlistProducts()
+const Actions = ({ dictionary }) => {
+  const { cart, wishlist } = useAuth();
   return (
     <div className="flex items-center space-x-4">
       <LinkWithLocale href="/shop/wishlist">
@@ -17,11 +18,9 @@ const Actions = async ({ dictionary }) => {
             <FontAwesomeIcon icon={faHeart} />
           </div>
           <div className="text-xs leading-3">{dictionary.wishlist}</div>
-          {userWishlist.length > 0 && (
-            <div className="absolute right-0 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
-              {userWishlist.length}
-            </div>
-          )}
+          <div className="absolute right-0 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
+            {wishlist.length}
+          </div>
         </div>
       </LinkWithLocale>
       <LinkWithLocale href="#">
@@ -31,11 +30,11 @@ const Actions = async ({ dictionary }) => {
           </div>
           <div className="text-xs leading-3">{dictionary.cart}</div>
           <div className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
-            2
+            {cart.length}
           </div>
         </div>
       </LinkWithLocale>
-      <LinkWithLocale href="/account">
+      <LinkWithLocale href="/ac">
         <div className="text-center text-gray-700 hover:text-primary transition relative">
           <div className="text-2xl">
             <FontAwesomeIcon icon={faUser} />

@@ -1,10 +1,10 @@
-"use client"
+"use client";
 import Image from "next/image";
-import AddToCartBtn from "../Products/AddToCartBtn"; 
-import WishlistDeleteBtn from "./WishlistDeleteBtn"; 
+import AddToCartBtn from "../Products/AddToCartBtn";
+import WishlistDeleteBtn from "./WishlistDeleteBtn";
+import LinkWithLocale from "../LinkWithLocale";
 
-const WishListCard = ({ product }) => {
-
+const WishListCard = ({ product, setProducts }) => {
   return (
     <div className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
       <div className="w-28">
@@ -17,9 +17,11 @@ const WishListCard = ({ product }) => {
         />
       </div>
       <div className="w-1/3">
-        <h2 className="text-gray-800 text-xl font-medium uppercase">
-          {product?.title}
-        </h2>
+        <LinkWithLocale href={`/shop/${product?.id}`}>
+          <h2 className="text-gray-800 text-xl font-medium uppercase hover:text-primary">
+            {product?.title}
+          </h2>
+        </LinkWithLocale>
         <p className="text-gray-500 text-sm">
           Availability:{" "}
           {product?.stock > 0 ? (
@@ -29,11 +31,18 @@ const WishListCard = ({ product }) => {
           )}
         </p>
       </div>
-      <div className="text-primary text-lg font-semibold">${product?.discountPrice}</div>
+      <div className="text-primary text-lg font-semibold">
+        ${product?.discountPrice}
+      </div>
 
-      <AddToCartBtn stock={product?.stock} productId={product?.id} quantity={1} wishListCard={true} />
+      <AddToCartBtn
+        stock={product?.stock}
+        productId={product?.id}
+        quantity={1}
+        wishListCard={true}
+      />
 
-     <WishlistDeleteBtn productId={product?.id}/>
+      <WishlistDeleteBtn productId={product?.id} setProducts={setProducts} />
     </div>
   );
 };

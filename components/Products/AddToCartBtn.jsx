@@ -1,5 +1,6 @@
 "use client";
 import { addToCart } from "@/app/actions";
+import useAuth from "@/app/hooks/useAuth";
 import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -11,10 +12,25 @@ const AddToCartBtn = ({
   quantity,
   stock,
 }) => {
+  const { cart, setCart } = useAuth();
+
+  const insertUniqId = (arr, id, quantity) => {
+    const exists = arr.some((item) => item.productId === id);
+
+    if (exists) {
+      const otherItems = arr.filter((item) => item.productId !== id);
+      return [...otherItems, { productId: id, quantity }];
+    } else {
+      return [...arr, { productId: id, quantity }];
+    }
+  };
+
   const handleAddToCart = async () => {
     try {
       const result = await addToCart(productId, quantity);
       if (result.success) {
+        const updatedCartList = insertUniqId(cart, productId, quantity);
+        setCart(updatedCartList);
         console.log("Product added to cart");
       } else {
         console.error("Failed to add product to cart:", result.message);
@@ -37,7 +53,7 @@ const AddToCartBtn = ({
         productDetails && "px-8 flex items-center gap-2"
       }`}
     >
-      {(productCard || wishListCard )&& <span>Add to cart</span>}
+      {(productCard || wishListCard) && <span>Add to cart</span>}
       {productDetails && (
         <>
           <FontAwesomeIcon icon={faBagShopping} />
