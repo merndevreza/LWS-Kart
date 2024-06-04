@@ -1,85 +1,67 @@
 import mongoose, { Schema } from "mongoose";
 
-const addressSchema = new Schema({
-  street: {
-    required: true,
-    type: String,
+const addressSchema = new Schema(
+  {
+    street: {
+      required: false,
+      type: String,
+    },
+    city: {
+      required: false,
+      type: String,
+    },
+    state: {
+      required: false,
+      type: String,
+    },
+    zipCode: {
+      required: false,
+      type: String,
+    },
+    phone: {
+      required: false,
+      type: String,
+    }
   },
-  city: {
-    required: true,
-    type: String,
-  },
-  state: {
-    required: true,
-    type: String,
-  },
-  zipCode: {
-    required: true,
-    type: String,
-  },
-  country: {
-    required: true,
-    type: String,
-  },
-}, { _id: false }); // Prevent Mongoose from creating an _id for the sub-document
+  { _id: false }
+); // Prevent Mongoose from creating an _id for the sub-document
 
 const salesSchema = new Schema({
-  productId: {
-    type: Schema.Types.ObjectId,
-    ref: "products",
-    required: true,
-  },
+  products: [
+    {
+      productId: { type: Schema.Types.ObjectId, ref: "Product" },
+      quantity: { type: Number, required: false },
+    },
+  ],
   userId: {
     type: Schema.Types.ObjectId,
     ref: "users",
-    required: true,
+    required: false,
+  },
+  name: {
+    required: false,
+    type: String,
+  },
+  email: {
+    required: false,
+    type: String,
+  },
+  company: {
+    required: false,
+    type: String,
   },
   amount: {
-    required: true,
+    required: false,
     type: Number,
-  },
-  quantity: {
-    required: true,
-    type: Number,
-  },
-  saleDate: {
-    required: true,
-    type: Date,
-  },
-  paymentMethod: {
-    required: true,
-    type: String,
-  },
+  }, 
   shippingAddress: {
     type: addressSchema,
-    required: true,
-  },
-  billingAddress: {
-    type: addressSchema,
-    required: true,
-  },
-  orderStatus: {
-    required: true,
-    type: String,
-  },
-  deliveryDate: {
-    type: Date,
-  },
-  transactionId: {
-    type: String,
-  },
-  taxAmount: {
-    type: Number,
-    default: 0,
-  },
+    required: false,
+  },  
   shippingCost: {
     type: Number,
     default: 0,
-  },
-  currency: {
-    required: true,
-    type: String,
-  },
+  }, 
 });
 
 export const salesModel =

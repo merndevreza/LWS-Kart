@@ -8,9 +8,10 @@ const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]);
-  useEffect(() => { 
+  useEffect(() => {
     async function getUser() {
       const response = await getUserFullInfo();
+      setUserInfo(response);
       setCart(response?.cart);
       setWishlist(response?.wishlist);
     }

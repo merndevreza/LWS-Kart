@@ -1,9 +1,8 @@
 "use server";
 import { auth, signIn } from "@/auth";
-import { productsModel } from "@/database/models/products-model";
+import { salesModel } from "@/database/models/sales-model";
 import { userModel } from "@/database/models/users-model";
-import connectMongo from "@/database/services/connectMongo"; 
-import { convertMongoIdToString } from "@/utils/replaceMongoId";
+import connectMongo from "@/database/services/connectMongo";
 
 export async function credentialLogin(formData) {
   try {
@@ -27,7 +26,7 @@ export async function doSocialLogin(formData) {
 export async function addToCart(productId, quantity) {
   try {
     await connectMongo();
-    const session=await auth()
+    const session = await auth();
 
     const user = await userModel.findById(session?.user?.id);
     if (!user) {
@@ -56,7 +55,7 @@ export async function addToWishlist(productId) {
   try {
     await connectMongo();
 
-    const session=await auth()
+    const session = await auth();
     const user = await userModel.findById(session?.user?.id);
     if (!user) {
       throw new Error("User not found");
@@ -64,7 +63,7 @@ export async function addToWishlist(productId) {
 
     const productInWishlist = user.wishlist.find(
       (item) => item.productId.toString() === productId
-    ); 
+    );
 
     if (!productInWishlist) {
       user.wishlist.push({ productId });
@@ -80,7 +79,7 @@ export async function addToWishlist(productId) {
 export async function removeFromWishlist(productId) {
   try {
     await connectMongo();
-    const session=await auth()
+    const session = await auth();
 
     const user = await userModel.findById(session?.user?.id);
     if (!user) {
@@ -106,11 +105,10 @@ export async function removeFromWishlist(productId) {
   }
 }
 
-
-export async function removeFromCart(productId){
+export async function removeFromCart(productId) {
   try {
     await connectMongo();
-    const session=await auth()
+    const session = await auth();
     const user = await userModel.findById(session?.user?.id);
     if (!user) {
       throw new Error("User not found");
@@ -131,6 +129,104 @@ export async function removeFromCart(productId){
     return { success: true, message: "Product removed from Cart" };
   } catch (error) {
     console.error("Error removing product from Cart:", error);
+    return { success: false, message: error.message };
+  }
+}
+//user
+
+export async function updateUserProfile(formData, type) {
+  try {
+    await connectMongo();
+    const session = await auth();
+    const user = await userModel.findById(session?.user?.id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    if (type === "profile") {
+      user.name = formData.name;
+      user.email = formData.email;
+      user.phone = formData.phone;
+      
+    } else if (type === "shipping") {
+      user.shippingAddress.street = formData.street;
+      user.shippingAddress.city = formData.city;
+      user.shippingAddress.state = formData.state;
+      user.shippingAddress.zip = formData.zip;
+      user.shippingAddress.phone = formData.phone;
+
+    } else if (type === "billing") {
+      user.billingAddress.street = formData.street;
+      user.billingAddress.city = formData.city;
+      user.billingAddress.state = formData.state;
+      user.billingAddress.zip = formData.zip;
+      user.billingAddress.phone = formData.phone;
+    }
+    await user.save();
+
+    return { success: true, message: "Profile Updated" };
+  } catch (error) {
+    console.error("Error occurred during updating profile:", error);
+    return { success: false, message: error.message };
+  }
+}
+//checkout
+
+// Function to place an order
+export async function placeOrder(formData) {
+  console.log("Connecting to MongoDB...");
+
+  // Connect to the MongoDB database
+  await connectMongo();
+  console.log("Connected to MongoDB");
+
+  // Get the authenticated user session
+  const session = await auth();
+  if (!session || !session.user) {
+    console.error("User session not found");
+    return { success: false, message: "User not authenticated" };
+  }
+  console.log("User authenticated:", session.user);
+
+  // Find the user in the database by ID
+  const user = await userModel.findById(session.user.id);
+  if (!user) {
+    console.error("User not found in database");
+    return { success: false, message: "User not found" };
+  }
+  console.log("User found:", user);
+
+  const newSale = new salesModel({
+    products: user.cart, 
+    userId: user._id,
+    name: formData.name,
+    email: formData.email,
+    phone:formData.phone,
+    company: formData.company || '',
+    amount: formData.amount,
+    shippingAddress: {
+      street:formData.street,
+      city:formData.city,
+      state:formData.state,
+      zip:formData.zip,
+    },
+    shippingCost: 0,  
+  });
+  
+  try {
+    // Save the new sale document to the database
+    await newSale.save();
+    console.log("New sale document saved");
+
+    // Clear the user's cart after placing the order
+    user.cart = [];
+    await user.save();
+    console.log("User cart cleared");
+
+    // Return a success response
+    return { success: true, message: "Order placed successfully" };
+  } catch (error) {
+    // Handle any errors that occur during the process
+    console.error("Error placing order:", error);
     return { success: false, message: error.message };
   }
 }

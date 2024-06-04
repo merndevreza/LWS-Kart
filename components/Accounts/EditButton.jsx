@@ -4,9 +4,9 @@ import { useState } from "react";
 import Modal from "../Modal/Modal";
 import BillingEditForm from "./BillingEditForm";
 import ProfileEditForm from "./ProfileEditForm";
-import ShippingEditForm from "./ShippingEditForm";
+import ShippingEditForm from "./ShippingEditForm"; 
 
-const EditButton = ({ dictionary, type, user }) => {
+const EditButton = ({ dictionary, type }) => { 
    const [show, setShow] = useState(false);
   return (
     <>
@@ -15,13 +15,13 @@ const EditButton = ({ dictionary, type, user }) => {
       </button>
       {show && <Modal setShow={setShow}>
           {type === "profile" && (
-            <ProfileEditForm user={user} dictionary={dictionary} />
+            <ProfileEditForm setShow={setShow} dictionary={dictionary} />
           )}
           {type === "shipping" && (
-            <ShippingEditForm user={user} dictionary={dictionary} />
+            <ShippingEditForm setShow={setShow} dictionary={dictionary} />
           )}
           {type === "billing" && (
-            <BillingEditForm user={user} dictionary={dictionary} />
+            <BillingEditForm setShow={setShow} dictionary={dictionary} />
           )}
         </Modal>}
     </>

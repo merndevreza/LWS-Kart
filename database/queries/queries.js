@@ -46,7 +46,7 @@ export async function getLatestProducts(totalProductsNeed) {
 export async function getTrendingProducts(totalProductsNeed) {
   await connectMongo();
 
-  const salesData = await salesModel.find().select("productId").lean();
+  const salesData = await salesModel.find().select("productId").lean(); 
   const productIds = [...new Set(salesData.map((sale) => sale.productId))];
   const products = await productsModel
     .find({ _id: { $in: productIds } })
@@ -160,7 +160,7 @@ export async function getAllProductsInCart() {
     user.cart.map(async (item) => {
       const product = await productsModel
         .findById(item.productId)
-        .select(["title", "stock", "discountPrice", "thumbnail"])
+        .select(["title", "stock", "size", "discountPrice", "thumbnail"])
         .lean();
 
       const productWithQuantity = {

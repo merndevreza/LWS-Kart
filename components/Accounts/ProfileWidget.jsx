@@ -1,24 +1,26 @@
-import { auth } from "@/auth";
+"use client";
+import useAuth from "@/app/hooks/useAuth";
 import Logout from "../Auth/Logout";
 import EditButton from "./EditButton";
 
-const ProfileWidget = async ({ dictionary }) => {
-  const session = await auth();
+const ProfileWidget = ({ dictionary }) => {
+  const { userInfo } = useAuth(); 
   return (
     <section className="shadow rounded bg-white px-4 pt-6 pb-8">
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-medium text-gray-800 text-lg">
           {dictionary.personalProfile}
         </h3>
-        <EditButton type="profile" user={session?.user} dictionary={dictionary}/>
+        <EditButton type="profile" dictionary={dictionary} />
       </div>
-      {session?.user && (
+      {userInfo && (
         <div className="space-y-1">
-          <h4 className="text-gray-700 font-medium">{session?.user.name}</h4>
-          <p className="text-gray-800">{session?.user.email}</p>
-          <p className="text-gray-800">{session?.user?.phone}</p>
+          <h4 className="text-gray-700 font-medium">{userInfo?.name}</h4>
+          <p className="text-gray-800">{userInfo?.email}</p>
+          <p className="text-gray-800">{userInfo?.phone}</p>
+
           <div className="pt-4">
-          <Logout/>
+            <Logout />
           </div>
         </div>
       )}

@@ -1,10 +1,14 @@
-"use client"
+"use client";
+import { updateUserProfile } from "@/app/actions";
+import useAuth from "@/app/hooks/useAuth";
 import { useState } from "react";
 
-const ProfileEditForm = ({ dictionary, user }) => {
+const ProfileEditForm = ({ setShow, dictionary }) => {
+  const { userInfo, setUserInfo } = useAuth();
   const [formData, setFormData] = useState({
-    name: user?.name || "",
-    phone: user?.phone || ""
+    name: userInfo?.name || "",
+    email: userInfo?.email || "",
+    phone: userInfo?.phone || "",
   });
 
   const handleChange = (e) => {
@@ -15,24 +19,22 @@ const ProfileEditForm = ({ dictionary, user }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/update-profile', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-
-      if (response.ok) {
-        alert('Profile updated successfully!');
-        // Optionally refresh user data or redirect
+      const response = await updateUserProfile(formData, "profile");
+      if (response.success) {
+        setUserInfo({
+          ...userInfo,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+        });
+        console.log("Profile updated successfully!");
       } else {
-        alert('Failed to update profile');
+        console.log("Failed to update profile");
       }
     } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('An error occurred. Please try again.');
+      console.error("Error updating profile:", error);
     }
+    setShow(false);
   };
 
   return (
@@ -47,11 +49,25 @@ const ProfileEditForm = ({ dictionary, user }) => {
             <input
               type="text"
               name="name"
-              value={formData.name}
+              defaultValue={formData.name}
               onChange={handleChange}
               id="name"
               className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
               placeholder="fulan fulana"
+            />
+          </div>
+          <div>
+            <label htmlFor="email" className="text-gray-600 mb-2 block">
+              {dictionary.emailAddress}
+            </label>
+            <input
+              type="email"
+              name="email"
+              defaultValue={formData.email}
+              onChange={handleChange}
+              id="email"
+              className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
+              placeholder="example@gmail.com"
             />
           </div>
           <div>
@@ -61,7 +77,7 @@ const ProfileEditForm = ({ dictionary, user }) => {
             <input
               type="text"
               name="phone"
-              value={formData.phone}
+              defaultValue={formData.phone}
               onChange={handleChange}
               id="phone"
               className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
