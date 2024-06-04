@@ -54,6 +54,7 @@ const ProductCard = async ({ product }) => {
       <AddToCartBtn
         productId={product?.id}
         stock={product?.stock} 
+        quantity={1}
         productCard={true}
       />
     </div>
