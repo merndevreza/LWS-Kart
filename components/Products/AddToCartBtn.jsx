@@ -12,7 +12,7 @@ const AddToCartBtn = ({
   quantity,
   stock,
 }) => {
-  const { cart, setCart } = useAuth();
+  const { userInfo, cart, setCart } = useAuth();
 
   const insertUniqId = (arr, id, quantity) => {
     const exists = arr.some((item) => item.productId === id);
@@ -27,6 +27,9 @@ const AddToCartBtn = ({
 
   const handleAddToCart = async () => {
     try {
+      if (condition) {
+        
+      }
       const result = await addToCart(productId, quantity);
       if (result.success) {
         const updatedCartList = insertUniqId(cart, productId, quantity);
