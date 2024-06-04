@@ -41,7 +41,7 @@ const FilterBySize = ({allAvailableSizes }) => {
 
   return (
     <div className="pt-4">
-      <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">Size</h3>
+      <h3 className="text-xl md:text-gray-800 mb-3 uppercase font-medium">Size</h3>
       <div className="flex items-center gap-2">
         {allAvailableSizes.map((size) => (
           <div key={size} className="size-selector">
@@ -56,7 +56,7 @@ const FilterBySize = ({allAvailableSizes }) => {
             />
             <label
               htmlFor={size}
-              className={`${query === size ? "bg-primary" : ""} text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600`}
+              className={`${query === size ? "bg-primary" : ""} text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm md:text-gray-600`}
             >
               {size}
             </label>

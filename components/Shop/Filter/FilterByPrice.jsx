@@ -43,7 +43,7 @@ const FilterByPrice = () => {
   }, [query,pathname,replace]); 
   return (
     <div className="pt-4">
-      <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">
+      <h3 className="text-xl md:text-gray-800 mb-3 uppercase font-medium">
         Price
       </h3>
       <div className="mt-4 flex items-center">

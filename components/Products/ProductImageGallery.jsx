@@ -18,10 +18,10 @@ const ProductImageGallery = ({ gallery, title }) => {
       />
 
       <div className="grid grid-cols-5 gap-4 mt-4">
-        {gallery.map((imgUrl) => (
+        {gallery.map((imgUrl,index) => (
           <Image
             onClick={() => handleChangeImage(imgUrl)}
-            key={imgUrl}
+            key={imgUrl+index}
             src={imgUrl}
             alt={title}
             width={200}

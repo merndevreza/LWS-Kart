@@ -39,7 +39,7 @@ const AddToCartBtn = ({
       console.error("Error adding product to cart:", error);
     }
   };
-
+console.log(stock);
   return (
     <button
       disabled={!stock > 0}

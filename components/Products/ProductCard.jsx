@@ -4,7 +4,6 @@ import Image from "next/image";
 import LinkWithLocale from "../LinkWithLocale";
 import AddToCartBtn from "./AddToCartBtn";
 import AverageRating from "./AverageRating";
-import { auth } from "@/auth";
 import AddWishlistBtn from "./AddWishlistBtn";
 
 const ProductCard = async ({ product }) => { 

@@ -1,8 +1,6 @@
-import React from "react";
-import ToggleSidebar from "./ToggleSidebar";
-import DrawerSidebar from "./DrawerSidebar";
-import DesktopSidebar from "./DesktopSidebar";
 import { getAllCategories, getAllSizes } from "@/database/queries/queries";
+import DesktopSidebar from "./DesktopSidebar";
+import MobileSidebar from "./MobileSidebar";
 
 const ShopSidebar = async () => {
   //all size
@@ -16,8 +14,7 @@ const ShopSidebar = async () => {
   const plainCategories = JSON.parse(JSON.stringify(categories));
   return (
     <>
-      <ToggleSidebar />
-      <DrawerSidebar
+      <MobileSidebar
         allAvailableSizes={allAvailableSizes}
         categories={plainCategories}
       />

@@ -1,35 +1,25 @@
+"use client";
 import FilterByCategory from "./Filter/FilterByCategory";
 import FilterByPrice from "./Filter/FilterByPrice";
 import FilterBySize from "./Filter/FilterBySize";
 
-const DrawerSidebar = ({allAvailableSizes, categories}) => {
+const DrawerSidebar = ({
+  allAvailableSizes,
+  categories,
+  isOpen,
+  setIsOpen,
+}) => {
   return (
     <div
-      id="drawer-example"
-      className="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800"
-      tabIndex="-1"
-      aria-labelledby="drawer-label"
+      className={`${
+        !isOpen ? "translate-x-full":""
+      } fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform bg-white w-80 dark:bg-gray-800`}
     >
-      <h5
-        id="drawer-label"
-        className="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"
-      >
-        <svg
-          className="w-5 h-5 mr-2"
-          aria-hidden="true"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fillRule="evenodd"
-            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-            clipRule="evenodd"
-          ></path>
-        </svg>
-        Info
+      <h5 className="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-300">
+        Filter Products
       </h5>
       <button
+        onClick={() => setIsOpen(false)}
         type="button"
         className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
       >
@@ -48,11 +38,11 @@ const DrawerSidebar = ({allAvailableSizes, categories}) => {
         </svg>
         <span className="sr-only">Close menu</span>
       </button>
-      <div className="divide-y divide-gray-200 space-y-5">
-        <FilterByCategory categories={categories}/>
-        <FilterByPrice/>
-        <FilterBySize allAvailableSizes={allAvailableSizes}/> 
-      </div> 
+      <div className="divide-y divide-gray-200 space-y-5 text-gray-400 dark:text-gray-200">
+        <FilterByCategory categories={categories} />
+        <FilterByPrice />
+        <FilterBySize allAvailableSizes={allAvailableSizes} />
+      </div>
     </div>
   );
 };

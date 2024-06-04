@@ -46,7 +46,7 @@ const FilterByCategory = ({ categories }) => {
 
   return (
     <div>
-      <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">
+      <h3 className="text-xl md:ext-gray-800 mb-3 uppercase font-medium">
         Categories
       </h3>
       <div className="space-y-2">
@@ -62,11 +62,11 @@ const FilterByCategory = ({ categories }) => {
             />
             <label
               htmlFor={category.id}
-              className="text-gray-600 ml-3 cursor-pointer"
+              className="md:text-gray-600 ml-3 cursor-pointer"
             >
               {category.name}
             </label>
-            <div className="ml-auto text-gray-600 text-sm">
+            <div className="ml-auto md:text-gray-600 text-sm">
               ({category.productsId.length})
             </div>
           </div>

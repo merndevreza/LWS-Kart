@@ -1,7 +1,7 @@
 "use server";
 import {
   convertMongoIdToString,
-  replaceMongoIdInArray, 
+  replaceMongoIdInArray,
   replaceMongoIdInObject,
 } from "@/utils/replaceMongoId";
 import { productsModel } from "../models/products-model";
@@ -107,6 +107,7 @@ export async function getProductsFilteredByCategories(categories) {
     .find()
     .select([
       "title",
+      "stock",
       "discountPrice",
       "price",
       "size",
