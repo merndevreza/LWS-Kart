@@ -147,3 +147,28 @@ export async function getWishlistProducts() {
 
   return replaceMongoIdInArray(products);
 }
+//Cart products
+export async function getAllProductsInCart() {
+  await connectMongo();
+  const session = await auth();
+  const user = await userModel
+    .findById(session?.user?.id)
+    .select(["cart"])
+    .lean();
+
+  const products = await Promise.all(
+    user.cart.map(async (item) => {
+      const product = await productsModel
+        .findById(item.productId)
+        .select(["title", "stock", "discountPrice", "thumbnail"])
+        .lean();
+
+      const productWithQuantity = {
+        product: convertMongoIdToString(product),
+        quantity: item?.quantity,
+      };
+      return productWithQuantity;
+    })
+  );
+  return products;
+}

@@ -1,7 +1,9 @@
 "use server";
 import { auth, signIn } from "@/auth";
+import { productsModel } from "@/database/models/products-model";
 import { userModel } from "@/database/models/users-model";
 import connectMongo from "@/database/services/connectMongo"; 
+import { convertMongoIdToString } from "@/utils/replaceMongoId";
 
 export async function credentialLogin(formData) {
   try {
@@ -62,8 +64,7 @@ export async function addToWishlist(productId) {
 
     const productInWishlist = user.wishlist.find(
       (item) => item.productId.toString() === productId
-    );
-    console.log(productInWishlist);
+    ); 
 
     if (!productInWishlist) {
       user.wishlist.push({ productId });
@@ -101,6 +102,35 @@ export async function removeFromWishlist(productId) {
     return { success: true, message: "Product removed from Wishlist" };
   } catch (error) {
     console.error("Error removing product from Wishlist:", error);
+    return { success: false, message: error.message };
+  }
+}
+
+
+export async function removeFromCart(productId){
+  try {
+    await connectMongo();
+    const session=await auth()
+    const user = await userModel.findById(session?.user?.id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const initialCartLength = user.cart.length;
+
+    user.cart = user.cart.filter(
+      (item) => item.productId.toString() !== productId
+    );
+
+    if (user.cart.length === initialCartLength) {
+      return { success: false, message: "Product not found in Cart" };
+    }
+
+    await user.save();
+
+    return { success: true, message: "Product removed from Cart" };
+  } catch (error) {
+    console.error("Error removing product from Cart:", error);
     return { success: false, message: error.message };
   }
 }

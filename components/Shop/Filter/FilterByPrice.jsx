@@ -7,7 +7,7 @@ const FilterByPrice = () => {
     min: "",
     max: "",
   });
-
+  
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
