@@ -54,6 +54,8 @@ export const {
   session: {
     strategy: "jwt",
   },
+  trustHost:true,
+  trustHostedDomain:true,
   providers: [
     CredentialProvider({
       credentials: {

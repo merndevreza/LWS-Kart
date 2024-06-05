@@ -3,6 +3,7 @@ import { addToCart } from "@/app/actions";
 import useAuth from "@/app/hooks/useAuth";
 import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/navigation";
 
 const AddToCartBtn = ({
   productCard,
@@ -13,6 +14,7 @@ const AddToCartBtn = ({
   stock,
 }) => {
   const { userInfo, cart, setCart } = useAuth();
+  const router=useRouter()
 
   const insertUniqId = (arr, id, quantity) => {
     const exists = arr.some((item) => item.productId === id);
@@ -27,8 +29,8 @@ const AddToCartBtn = ({
 
   const handleAddToCart = async () => {
     try {
-      if (condition) {
-        
+      if (!userInfo) {
+        router.push("/login")
       }
       const result = await addToCart(productId, quantity);
       if (result.success) {
