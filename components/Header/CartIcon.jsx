@@ -6,8 +6,8 @@ import { useState } from "react";
 import CartDrawer from "./CartDrawer";
 
 const CartIcon = ({ dictionary }) => {
-  const { cart } = useAuth();
-  const [isOpen, setIsOpen] = useState(false); 
+  const { userInfo } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <button
@@ -19,11 +19,10 @@ const CartIcon = ({ dictionary }) => {
         </span>
         <div className="text-xs leading-3">{dictionary.cart}</div>
         <div className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
-          {cart.length}
+          {userInfo?.cart ? userInfo.cart.length : 0}
         </div>
       </button>
       {isOpen && <CartDrawer isOpen={isOpen} setIsOpen={setIsOpen} />}
-      
     </>
   );
 };

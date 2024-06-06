@@ -14,7 +14,7 @@ const AddToCartBtn = ({
   stock,
 }) => {
   const { userInfo, cart, setCart } = useAuth();
-  const router=useRouter()
+  const router = useRouter();
 
   const insertUniqId = (arr, id, quantity) => {
     const exists = arr.some((item) => item.productId === id);
@@ -29,21 +29,22 @@ const AddToCartBtn = ({
 
   const handleAddToCart = async () => {
     try {
-      if (!userInfo) {
-        router.push("/login")
-      }
-      const result = await addToCart(productId, quantity);
-      if (result.success) {
-        const updatedCartList = insertUniqId(cart, productId, quantity);
-        setCart(updatedCartList);
-        console.log("Product added to cart");
+      if (userInfo) {
+        const result = await addToCart(productId, quantity);
+        if (result.success) {
+          const updatedCartList = insertUniqId(cart, productId, quantity);
+          setCart(updatedCartList);
+          console.log("Product added to cart");
+        } else {
+          console.error("Failed to add product to cart:", result.message);
+        }
       } else {
-        console.error("Failed to add product to cart:", result.message);
+        router.push("/login");
       }
     } catch (error) {
       console.error("Error adding product to cart:", error);
     }
-  }; 
+  };
   return (
     <button
       disabled={!stock > 0}

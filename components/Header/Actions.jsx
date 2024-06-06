@@ -1,12 +1,14 @@
-// import WishlistIcon from "./WishlistIcon";
+import WishlistIcon from "./WishlistIcon";
 import CartIcon from "./CartIcon";
 import AccountIcon from "./AccountIcon";
+import { auth } from "@/auth";
 
-const Actions = ({ dictionary }) => {
+const Actions = async ({ dictionary }) => {
+  const session = await auth();
   return (
     <div className="flex items-center space-x-4">
-      {/* <WishlistIcon dictionary={dictionary} /> */}
-      <CartIcon dictionary={dictionary} />
+      <WishlistIcon user={session?.user} dictionary={dictionary} />
+      <CartIcon user={session?.user} dictionary={dictionary} />
       <AccountIcon dictionary={dictionary} />
     </div>
   );

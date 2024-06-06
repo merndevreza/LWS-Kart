@@ -3,9 +3,11 @@ import { addToWishlist } from "@/app/actions";
 import useAuth from "@/app/hooks/useAuth";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/navigation";
 
 const AddWishlistBtn = ({ detailsPage, card, productId }) => {
-  const { wishlist, setWishlist } = useAuth();
+  const { userInfo, wishlist, setWishlist } = useAuth();
+  const router = useRouter();
 
   const insertUniqId = (arr, id) => {
     const exists = arr.some((item) => item.productId === id);
@@ -17,16 +19,19 @@ const AddWishlistBtn = ({ detailsPage, card, productId }) => {
 
   const handleAddWishlist = async () => {
     try {
-      const result = await addToWishlist(productId);
+      if (userInfo) {
+        const result = await addToWishlist(productId);
 
-      
-      if (result.success) {
-        const updatedList = insertUniqId(wishlist, productId); 
-        setWishlist(updatedList);
+        if (result.success) {
+          const updatedList = insertUniqId(wishlist, productId);
+          setWishlist(updatedList);
 
-        console.log("Product added to Wishlist");
+          console.log("Product added to Wishlist");
+        } else {
+          console.error("Failed to add product to Wishlist:", result.message);
+        }
       } else {
-        console.error("Failed to add product to Wishlist:", result.message);
+        router.push("/login");
       }
     } catch (error) {
       console.error("Error adding product to Wishlist:", error);
