@@ -139,7 +139,7 @@ export async function getWishlistProducts() {
     .findById(session?.user?.id)
     .select(["wishlist"])
     .lean();
-  const productsId = user.wishlist.map((item) => item.productId);
+  const productsId = user?.wishlist.map((item) => item.productId);
   const products = await productsModel
     .find({ _id: { $in: productsId } })
     .select(["title", "stock", "discountPrice", "price", "thumbnail"])
@@ -157,7 +157,7 @@ export async function getAllProductsInCart() {
     .lean();
 
   const products = await Promise.all(
-    user.cart.map(async (item) => {
+    user?.cart.map(async (item) => {
       const product = await productsModel
         .findById(item.productId)
         .select(["title", "stock", "size", "discountPrice", "thumbnail"])
