@@ -3,7 +3,7 @@ import LinkWithLocale from "../LinkWithLocale";
 import { useEffect, useState } from "react";
 import { getAllProductsInCart } from "@/database/queries/queries";
 
-const CheckoutSummary = ({ handlePlaceOrder,errors }) => {
+const CheckoutSummary = ({ handlePlaceOrder, errors }) => {
   const [productsWithQuantity, setProductsWithQuantity] = useState([]);
   const [subtotalPrice, setSubtotalPrice] = useState(0);
   const shippingCost = 0;
@@ -11,13 +11,14 @@ const CheckoutSummary = ({ handlePlaceOrder,errors }) => {
   useEffect(() => {
     async function getProducts() {
       const result = await getAllProductsInCart();
-      setProductsWithQuantity(result);
-
-      // Calculate subtotal price after setting the products
-      const subtotal = result.reduce((total, item) => {
-        return total + item.product.discountPrice * item.quantity;
-      }, 0);
-      setSubtotalPrice(subtotal);
+      if (result.success) {
+        setProductsWithQuantity(result?.data);
+        
+        const subtotal = result?.data.reduce((total, item) => {
+          return total + item.product.discountPrice * item.quantity;
+        }, 0);
+        setSubtotalPrice(subtotal);
+      }
     }
     getProducts();
   }, []);
@@ -59,7 +60,7 @@ const CheckoutSummary = ({ handlePlaceOrder,errors }) => {
         <p>${(subtotalPrice + shippingCost).toFixed(2)}</p>
       </div>
 
-      <form onSubmit={(e)=>handlePlaceOrder(e,subtotalPrice)}>
+      <form onSubmit={(e) => handlePlaceOrder(e, subtotalPrice)}>
         <div className="flex items-center mb-4 mt-2">
           <input
             type="checkbox"

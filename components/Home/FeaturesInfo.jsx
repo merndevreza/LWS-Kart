@@ -11,9 +11,9 @@ const FeaturesInfo = ({dictionary}) => {
           <Image
             src={deliveryIcon}
             alt="Delivery"
-            className="object-contain"
-            width={48}
-            height={48}
+            className="object-contain w-12 h-12"
+            width={0}
+            height={0}
           />
           <div>
             <h4 className="font-medium capitalize text-lg">{dictionary.featureTitle1}</h4>
@@ -24,9 +24,9 @@ const FeaturesInfo = ({dictionary}) => {
           <Image
             src={moneyBackIcon} 
             alt="Money Back Guarantee"
-            className="object-contain"
-            width={48}
-            height={48}
+            className="object-contain w-12 h-12"
+            width={0}
+            height={0}
           />
           <div>
             <h4 className="font-medium capitalize text-lg">{dictionary.featureTitle2}</h4>
@@ -37,9 +37,9 @@ const FeaturesInfo = ({dictionary}) => {
           <Image
             src={serviceHoursIcon}
             alt="Service Hours icon"
-            className="object-contain"
-            width={48}
-            height={48}
+            className="object-contain w-12 h-12"
+            width={0}
+            height={0}
           />
           <div>
             <h4 className="font-medium capitalize text-lg">{dictionary.featureTitle3}</h4>

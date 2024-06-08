@@ -7,11 +7,11 @@ const ShopSidebar = async () => {
   const allSizes = await getAllSizes();
   const sizeSorting = ["XS", "S", "M", "L", "XL"];
   const allAvailableSizes = sizeSorting
-    .map((size) => allSizes.find((s) => s === size))
+    .map((size) => allSizes?.data.find((s) => s === size))
     .filter((size) => size !== undefined);
   //all categories
-  const categories = await getAllCategories();
-  const plainCategories = JSON.parse(JSON.stringify(categories));
+  const categories = await getAllCategories(); 
+  const plainCategories = JSON.parse(JSON.stringify(categories?.data)); 
   return (
     <>
       <MobileSidebar

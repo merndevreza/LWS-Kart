@@ -8,7 +8,9 @@ const CartProducts = () => {
   useEffect(() => {
     async function getProducts() {
       const result = await getAllProductsInCart();
-      setProductsWithQuantity(result);
+      if (result.success) {
+        setProductsWithQuantity(result?.data);
+      }
     }
     getProducts();
   }, []);

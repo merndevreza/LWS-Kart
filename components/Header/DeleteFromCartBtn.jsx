@@ -19,12 +19,10 @@ const DeleteFromCartBtn = ({ productId, setProductsWithQuantity }) => {
       const result = await removeFromCart(productId);
       if (result.success) {
         const response = await getAllProductsInCart();
-        setProductsWithQuantity(response);
+        setProductsWithQuantity(response?.data);
 
         const updatedList = removeId(cart, productId);
-        setCart(updatedList);
-
-        console.log("Product removed from Cart");
+        setCart(updatedList); 
       } else {
         console.error("Failed removed from Cart:", result.message);
       }

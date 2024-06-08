@@ -8,8 +8,8 @@ import { redirect } from "next/navigation";
 
 const AccountPage = async ({ params: { lang } }) => {
   const dictionary = await getDictionary(lang);
-  const session=await auth();
-  if (!session) {
+  const session=await auth(); 
+  if (!session?.user) {
    redirect("/login")
  }
   return (

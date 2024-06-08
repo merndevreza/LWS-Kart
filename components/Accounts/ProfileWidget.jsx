@@ -4,7 +4,7 @@ import Logout from "../Auth/Logout";
 import EditButton from "./EditButton";
 
 const ProfileWidget = ({ dictionary }) => {
-  const { userInfo } = useAuth(); 
+  const { userInfo } = useAuth();  
   return (
     <section className="shadow rounded bg-white px-4 pt-6 pb-8">
       <div className="flex items-center justify-between mb-4">

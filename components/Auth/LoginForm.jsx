@@ -3,8 +3,10 @@ import { credentialLogin } from "@/app/actions";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import LinkWithLocale from "../LinkWithLocale";
+import useAuth from "@/app/hooks/useAuth";
 
 const LoginForm = ({ dictionary }) => {
+  const {setUserInfo, setWishlist,setCart}=useAuth()
   const [error, setError] = useState("");
   const router = useRouter();
   
@@ -12,12 +14,15 @@ const LoginForm = ({ dictionary }) => {
     event.preventDefault();
     try {
       const formData = new FormData(event.currentTarget);
-      const response = await credentialLogin(formData);
-      if (!!response.error) {
-        setError(response.error.message);
-      } else {
+      const response = await credentialLogin(formData); 
+      if (response.success) {
+        setUserInfo(response?.data); 
+        setCart(response?.data?.cart)
+        setWishlist(response?.data?.wishlist)
         router.push("/");
-      }
+      }else{
+        setError(response.message);
+      } 
     } catch (error) {
       setError(error.message);
     }

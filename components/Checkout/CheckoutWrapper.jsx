@@ -9,7 +9,7 @@ import Success from "../Modal/Success";
 
 const CheckoutWrapper = ({ dictionary }) => {
   const [showModal, setShowModal] = useState(false);
-  const { userInfo, setUserInfo } = useAuth();
+  const { userInfo, setCart } = useAuth();
   const [formData, setFormData] = useState({
     fName: userInfo?.name.split(" ")[0] || "",
     lName: userInfo?.name.split(" ")[1] || "",
@@ -53,10 +53,21 @@ const CheckoutWrapper = ({ dictionary }) => {
       zip: formData.zip,
     };
     if (validateForm()) {
-      //Place Order to the
       const response = await placeOrder(OrderDetails);
       if (response.success) {
-        setShowModal(true)
+        setShowModal(true);
+        setCart([]);
+        setFormData({
+          fName: "",
+          lName: "",
+          email: "",
+          street: "",
+          city: "",
+          state: "",
+          zip: "",
+          phone: "",
+          company: "",
+        });
       }
       console.log("Order placed:", formData);
     } else {

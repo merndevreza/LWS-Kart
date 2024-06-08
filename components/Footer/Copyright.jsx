@@ -7,7 +7,7 @@ const Copyright = ({dictionary}) => {
       <div className="container flex items-center justify-between">
         <p className="text-white">&copy; LWSKart - {dictionary.allRightsReserved}</p>
         <div>
-          <Image src={paymentsImg} alt="methods" className="h-5" width={333} height={28} />
+          <Image src={paymentsImg} alt="methods" className="object-contain w-[333px] h-5"  width={0} height={0} />
         </div>
       </div>
     </div>

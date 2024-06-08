@@ -6,13 +6,15 @@ import ProductCard from "../Products/ProductCard";
 
 const ShopProducts = async ({ search, category, size, min, max }) => {
   let products = [];
-  products = await getAllProducts();
-
+  const response = await getAllProducts();
+  products = response?.data;
   if (search) {
-    products = await getAllProducts(search);
+    const response = await getAllProducts(search);
+    products = response?.data;
   }
   if (category) {
-    products = await getProductsFilteredByCategories(category);
+    const response = await getProductsFilteredByCategories(category);
+    products = response?.data;
   }
   if (min && max) {
     products = products.filter((product) => {
@@ -32,7 +34,7 @@ const ShopProducts = async ({ search, category, size, min, max }) => {
     <div className="col-span-3">
       <div className="grid md:grid-cols-3 grid-cols-2 gap-6">
         {products?.map((product) => (
-          <ProductCard product={product}  key={product?.id} />
+          <ProductCard product={product} key={product?.id} />
         ))}
       </div>
     </div>

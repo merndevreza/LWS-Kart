@@ -4,7 +4,7 @@ import AddToCartBtn from "../Products/AddToCartBtn";
 import WishlistDeleteBtn from "./WishlistDeleteBtn";
 import LinkWithLocale from "../LinkWithLocale";
 
-const WishListCard = ({ product, setProducts }) => {
+const WishListCard = ({ product, products, setProducts }) => {
   return (
     <div className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
       <div className="w-28">
@@ -40,9 +40,15 @@ const WishListCard = ({ product, setProducts }) => {
         productId={product?.id}
         quantity={1}
         wishListCard={true}
+        wishlistProducts={products}
+        setWishlistProducts={setProducts}
       />
 
-      <WishlistDeleteBtn productId={product?.id} setProducts={setProducts} />
+      <WishlistDeleteBtn
+        productId={product?.id}
+        setProducts={setProducts}
+        products={products}
+      />
     </div>
   );
 };

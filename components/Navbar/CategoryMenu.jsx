@@ -19,7 +19,7 @@ const CategoryMenu = async ({ dictionary }) => {
       </div>
 
       <div className="absolute w-full left-0 top-full bg-white shadow-md py-3 opacity-0 group-hover:opacity-100 transition duration-300 invisible group-hover:visible z-40">
-        {categories.map((category) => (
+        {categories?.data.map((category) => (
           <LinkWithLocale
             key={category.id}
             href={`/shop?category=${category?.name}`}

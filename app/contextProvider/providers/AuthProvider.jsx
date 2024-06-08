@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AuthContext } from "../contexts";
-import { getUserFullInfo } from "@/database/queries/queries";
+import { getUserInfo } from "@/database/queries/queries";
 
 const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
@@ -10,10 +10,12 @@ const AuthProvider = ({ children }) => {
   const [wishlist, setWishlist] = useState([]);
   useEffect(() => {
     async function getUser() {
-      const response = await getUserFullInfo();
-      setUserInfo(response);
-      setCart(response?.cart);
-      setWishlist(response?.wishlist);
+      const response = await getUserInfo();
+      if (response.success) {
+        setUserInfo(response?.data);
+        setCart(response?.data?.cart);
+        setWishlist(response?.data?.wishlist);
+      }
     }
     getUser();
   }, []);

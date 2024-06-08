@@ -9,7 +9,7 @@ const NewArrival = async({dictionary}) => {
       <SectionTitle title={dictionary.newArrivalSectionTitle}/> 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {
-          products.map(product=><ProductCard key={product.id} product={product}/>)
+          products?.data.map(product=><ProductCard key={product.id} product={product}/>)
         } 
       </div>
     </section>

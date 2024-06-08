@@ -7,7 +7,7 @@ const TrendingProducts = async({dictionary}) => {
    return (
      <section className="container pb-16">
        <SectionTitle title={dictionary.productsSectionTitle}/>
-       <Products products={products}/>
+       <Products products={products?.data}/>
      </section>
    );
  };

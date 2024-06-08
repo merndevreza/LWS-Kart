@@ -2,6 +2,7 @@
 import { auth, signIn } from "@/auth";
 import { salesModel } from "@/database/models/sales-model";
 import { userModel } from "@/database/models/users-model";
+import { getUserInfo } from "@/database/queries/queries";
 import connectMongo from "@/database/services/connectMongo";
 
 export async function credentialLogin(formData) {
@@ -11,16 +12,25 @@ export async function credentialLogin(formData) {
       email: formData.get("email"),
       password: formData.get("password"),
       redirect: false,
-    });
-    return response;
+    }); 
+    //here I should check if the request is succeed
+    const userInfo=await getUserInfo()
+    return userInfo;
   } catch (error) {
     throw new Error(error);
   }
 }
 
 export async function doSocialLogin(formData) {
+  await connectMongo(); 
   const action = formData.get("action");
-  await signIn(action, { callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/` });
+  const response = await signIn(action, {
+    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/`,
+  });
+  const userInfo=await getUserInfo()
+  console.log("social login response", response);
+  console.log("social login user", userInfo);
+  return response;
 }
 
 export async function addToCart(productId, quantity) {
@@ -28,7 +38,7 @@ export async function addToCart(productId, quantity) {
     await connectMongo();
     const session = await auth();
 
-    const user = await userModel.findById(session?.user?.id);
+    const user = await userModel.findById(session?.user?._id);
     if (!user) {
       throw new Error("User not found");
     }
@@ -47,7 +57,6 @@ export async function addToCart(productId, quantity) {
 
     return { success: true, message: "Product added to cart" };
   } catch (error) {
-    console.error("Error adding product to cart:", error);
     return { success: false, message: error.message };
   }
 }
@@ -56,7 +65,7 @@ export async function addToWishlist(productId) {
     await connectMongo();
 
     const session = await auth();
-    const user = await userModel.findById(session?.user?.id);
+    const user = await userModel.findById(session?.user?._id);
     if (!user) {
       throw new Error("User not found");
     }
@@ -71,7 +80,6 @@ export async function addToWishlist(productId) {
     await user.save();
     return { success: true, message: "Product added to Wishlist" };
   } catch (error) {
-    console.error("Error adding product to Wishlist:", error);
     return { success: false, message: error.message };
   }
 }
@@ -80,8 +88,7 @@ export async function removeFromWishlist(productId) {
   try {
     await connectMongo();
     const session = await auth();
-
-    const user = await userModel.findById(session?.user?.id);
+    const user = await userModel.findById(session?.user?._id);
     if (!user) {
       throw new Error("User not found");
     }
@@ -100,7 +107,6 @@ export async function removeFromWishlist(productId) {
 
     return { success: true, message: "Product removed from Wishlist" };
   } catch (error) {
-    console.error("Error removing product from Wishlist:", error);
     return { success: false, message: error.message };
   }
 }
@@ -109,26 +115,22 @@ export async function removeFromCart(productId) {
   try {
     await connectMongo();
     const session = await auth();
-    const user = await userModel.findById(session?.user?.id);
+    const user = await userModel.findById(session?.user?._id);
     if (!user) {
       throw new Error("User not found");
     }
 
     const initialCartLength = user.cart.length;
-
     user.cart = user.cart.filter(
       (item) => item.productId.toString() !== productId
     );
-
     if (user.cart.length === initialCartLength) {
       return { success: false, message: "Product not found in Cart" };
     }
-
     await user.save();
 
     return { success: true, message: "Product removed from Cart" };
   } catch (error) {
-    console.error("Error removing product from Cart:", error);
     return { success: false, message: error.message };
   }
 }
@@ -138,7 +140,7 @@ export async function updateUserProfile(formData, type) {
   try {
     await connectMongo();
     const session = await auth();
-    const user = await userModel.findById(session?.user?.id);
+    const user = await userModel.findById(session?.user?._id);
     if (!user) {
       throw new Error("User not found");
     }
@@ -146,14 +148,12 @@ export async function updateUserProfile(formData, type) {
       user.name = formData.name;
       user.email = formData.email;
       user.phone = formData.phone;
-      
     } else if (type === "shipping") {
       user.shippingAddress.street = formData.street;
       user.shippingAddress.city = formData.city;
       user.shippingAddress.state = formData.state;
       user.shippingAddress.zip = formData.zip;
       user.shippingAddress.phone = formData.phone;
-
     } else if (type === "billing") {
       user.billingAddress.street = formData.street;
       user.billingAddress.city = formData.city;
@@ -165,7 +165,6 @@ export async function updateUserProfile(formData, type) {
 
     return { success: true, message: "Profile Updated" };
   } catch (error) {
-    console.error("Error occurred during updating profile:", error);
     return { success: false, message: error.message };
   }
 }
@@ -173,60 +172,38 @@ export async function updateUserProfile(formData, type) {
 
 // Function to place an order
 export async function placeOrder(formData) {
-  console.log("Connecting to MongoDB...");
-
-  // Connect to the MongoDB database
-  await connectMongo();
-  console.log("Connected to MongoDB");
-
-  // Get the authenticated user session
-  const session = await auth();
-  if (!session || !session.user) {
-    console.error("User session not found");
-    return { success: false, message: "User not authenticated" };
-  }
-  console.log("User authenticated:", session.user);
-
-  // Find the user in the database by ID
-  const user = await userModel.findById(session.user.id);
-  if (!user) {
-    console.error("User not found in database");
-    return { success: false, message: "User not found" };
-  }
-  console.log("User found:", user);
-
-  const newSale = new salesModel({
-    products: user.cart, 
-    userId: user._id,
-    name: formData.name,
-    email: formData.email,
-    phone:formData.phone,
-    company: formData.company || '',
-    amount: formData.amount,
-    shippingAddress: {
-      street:formData.street,
-      city:formData.city,
-      state:formData.state,
-      zip:formData.zip,
-    },
-    shippingCost: 0,  
-  });
-  
   try {
-    // Save the new sale document to the database
-    await newSale.save();
-    console.log("New sale document saved");
+    await connectMongo();
+    const session = await auth();
+    const user = await userModel.findById(session?.user?._id);
+    if (!user) {
+      throw new Error("User not found");
+    }
 
-    // Clear the user's cart after placing the order
+    const newSale = new salesModel({
+      products: user.cart,
+      userId: user._id,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      company: formData.company || "",
+      amount: formData.amount,
+      shippingAddress: {
+        street: formData.street,
+        city: formData.city,
+        state: formData.state,
+        zip: formData.zip,
+      },
+      shippingCost: 0,
+    });
+    await newSale.save();
     user.cart = [];
     await user.save();
-    console.log("User cart cleared");
-
-    // Return a success response
-    return { success: true, message: "Order placed successfully" };
+    return {
+      success: true,
+      message: "Order placed successfully",
+    };
   } catch (error) {
-    // Handle any errors that occur during the process
-    console.error("Error placing order:", error);
     return { success: false, message: error.message };
   }
 }

@@ -2,10 +2,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { removeFromWishlist } from "@/app/actions";
-import { getWishlistProducts } from "@/database/queries/queries";
 import useAuth from "@/app/hooks/useAuth";
 
-const WishlistDeleteBtn = ({ productId, setProducts }) => {
+const WishlistDeleteBtn = ({ productId,products, setProducts }) => {
   const { wishlist, setWishlist } = useAuth();
   const removeId = (arr, id) => {
     const updatedList = arr.filter((item) => item.productId !== id);
@@ -16,12 +15,11 @@ const WishlistDeleteBtn = ({ productId, setProducts }) => {
     try {
       const result = await removeFromWishlist(productId);
       if (result.success) {
-        const response = await getWishlistProducts();
-        setProducts(response);
-        
+        const updatedList=products.filter(item=>item.id!==productId)
+        setProducts(updatedList)
+
         const updatedWishlist = removeId(wishlist, productId);
         setWishlist(updatedWishlist);
-
 
         console.log("Product removed from Wishlist");
       } else {

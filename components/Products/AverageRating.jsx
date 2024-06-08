@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const AverageRating = async ({ productId, detailsPage }) => {
   const allReviews = await getAllReviewsByProductId(productId);
-  const ratings = allReviews.map((review) => review.rating);
+  const ratings = allReviews?.data.map((review) => review.rating);
   const total = ratings.reduce((sum, rating) => sum + rating, 0);
   let average = total / ratings.length;
   if (detailsPage) {

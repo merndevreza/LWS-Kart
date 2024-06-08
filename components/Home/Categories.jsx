@@ -8,7 +8,7 @@ const Categories = async ({ dictionary }) => {
     <section className="container py-16">
       <SectionTitle title={dictionary.categorySectionTitle} />
       <div className="grid grid-cols-3 gap-3">
-        {categories.map((category) => (
+        {categories?.data.map((category) => (
           <CategoryCard key={category.id} category={category} />
         ))}
       </div>
