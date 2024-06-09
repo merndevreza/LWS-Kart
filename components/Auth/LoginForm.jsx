@@ -72,8 +72,8 @@ const LoginForm = ({ dictionary }) => {
               {dictionary.rememberMe}
             </label>
           </div>
-          <LinkWithLocale href="#">
-            <span className="text-primary">{dictionary.forgotPassword}</span>
+          <LinkWithLocale className="text-primary" href="#">
+           {dictionary.forgotPassword} 
           </LinkWithLocale>
         </div>
         <div className="mt-4">

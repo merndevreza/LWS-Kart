@@ -11,10 +11,8 @@ const CategoryCard = ({ category }) => {
         width={400}
         height={400}
       />
-      <LinkWithLocale href={`/shop?category=${category?.name}`}>
-        <span className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition">
-          {category?.name}
-        </span>
+      <LinkWithLocale  className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition" href={`/shop?category=${category?.name}`}> 
+          {category?.name} 
       </LinkWithLocale>
     </div>
   );

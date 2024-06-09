@@ -15,8 +15,9 @@ const AddToCartBtn = ({
   quantity,
   stock,
 }) => {
-  const { userInfo,wishlist, setWishlist, cart, setCart } = useAuth();
+  const { userInfo,wishlist, setWishlist, cart, setCart } = useAuth(); 
   const router = useRouter();
+
   const insertUniqId = (arr, id, quantity) => {
     const exists = arr.some((item) => item.productId === id);
 

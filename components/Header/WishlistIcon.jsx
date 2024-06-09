@@ -4,7 +4,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import LinkWithLocale from "../LinkWithLocale";
 import useAuth from "@/app/hooks/useAuth";
 const WishlistIcon = ({ dictionary }) => {
-  const { userInfo, wishlist } = useAuth();
+  const { userInfo,wishlist } = useAuth();
   return (
     <LinkWithLocale href="/shop/wishlist">
       <div className="text-center text-gray-700 hover:text-primary transition relative">

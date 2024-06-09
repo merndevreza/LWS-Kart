@@ -6,10 +6,11 @@ const NotFound = () => {
       <h2 className="text-3xl text-center">
         <span className="block mb-3">Oops!</span>Page not found
       </h2>
-      <LinkWithLocale href="/">
-        <span className="bg-[#00D991] px-2 py-1 rounded text-black">
-          Go Home
-        </span>
+      <LinkWithLocale
+        className="bg-[#00D991] px-2 py-1 rounded text-black"
+        href="/"
+      >
+        Go Home
       </LinkWithLocale>
     </div>
   );

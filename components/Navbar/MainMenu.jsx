@@ -3,25 +3,29 @@ import LinkWithLocale from "../LinkWithLocale";
 const MainMenu = ({ dictionary }) => {
   return (
     <div className="flex items-center space-x-6 capitalize">
-      <LinkWithLocale href="/">
-        <span className="text-gray-200 hover:text-white transition">
-          {dictionary.home}
-        </span>
+      <LinkWithLocale
+        className="text-gray-200 hover:text-white transition"
+        href="/"
+      >
+        <span>{dictionary.home}</span>
       </LinkWithLocale>
-      <LinkWithLocale href="/shop">
-        <span className="text-gray-200 hover:text-white transition">
-          {dictionary.shop}
-        </span>
+      <LinkWithLocale
+        className="text-gray-200 hover:text-white transition"
+        href="/shop"
+      >
+        {dictionary.shop}
       </LinkWithLocale>
-      <LinkWithLocale href="#">
-        <span className="text-gray-200 hover:text-white transition">
-          {dictionary.aboutUs}
-        </span>
+      <LinkWithLocale
+        className="text-gray-200 hover:text-white transition"
+        href="#"
+      >
+        {dictionary.aboutUs}
       </LinkWithLocale>
-      <LinkWithLocale href="#">
-        <span className="text-gray-200 hover:text-white transition">
-          {dictionary.contactUs}
-        </span>
+      <LinkWithLocale
+        className="text-gray-200 hover:text-white transition"
+        href="#"
+      >
+        {dictionary.contactUs}
       </LinkWithLocale>
     </div>
   );

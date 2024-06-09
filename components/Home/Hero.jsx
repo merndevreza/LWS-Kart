@@ -17,14 +17,11 @@ const Hero = ({ dictionary }) => {
           </h1>
           <p className="max-w-2xl">{dictionary.heroSubtitle}</p>
           <div className="mt-12">
-            <LinkWithLocale href="/shop">
-              <span
-                className="bg-primary border border-primary text-white px-8 py-3 font-medium 
-                  rounded-md hover:bg-transparent hover:text-primary"
-              >
-                {" "}
-                {dictionary.shopNow}
-              </span>
+            <LinkWithLocale
+              className="bg-primary border border-primary text-white px-8 py-3 font-medium rounded-md hover:bg-transparent hover:text-primary"
+              href="/shop"
+            >
+              {dictionary.shopNow}
             </LinkWithLocale>
           </div>
         </div>

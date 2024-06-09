@@ -3,10 +3,8 @@ import LinkWithLocale from "../LinkWithLocale";
 const SignInOut = ({ dictionary }) => {
   return (
     <>
-      <LinkWithLocale href="/login">
-        <span className="text-gray-200 hover:text-white transition">
-          {dictionary.login}
-        </span>
+      <LinkWithLocale className="text-gray-200 hover:text-white transition" href="/login"> 
+          {dictionary.login} 
       </LinkWithLocale>
     </>
   );

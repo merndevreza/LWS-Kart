@@ -9,25 +9,17 @@ const FooterNavWidgets = ({ dictionary }) => {
             {dictionary.solutions}
           </h3>
           <div className="mt-4 flex flex-col gap-2">
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.marketing}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#">
+            {dictionary.marketing}
             </LinkWithLocale>
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.analitycs}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#">
+            {dictionary.analitycs}
             </LinkWithLocale>
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.commerce}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#">
+            {dictionary.commerce}
             </LinkWithLocale>
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.insights}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#">
+            {dictionary.insights}
             </LinkWithLocale>
           </div>
         </div>
@@ -37,20 +29,14 @@ const FooterNavWidgets = ({ dictionary }) => {
             {dictionary.support}
           </h3>
           <div className="mt-4 flex flex-col gap-2">
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.pricing}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#">
+            {dictionary.pricing}
             </LinkWithLocale>
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.guides}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#"> 
+                {dictionary.guides} 
             </LinkWithLocale>
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.apiStatus}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#"> 
+                {dictionary.apiStatus} 
             </LinkWithLocale>
           </div>
         </div>
@@ -61,25 +47,17 @@ const FooterNavWidgets = ({ dictionary }) => {
             {dictionary.solutions}
           </h3>
           <div className="mt-4 flex flex-col gap-2">
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.marketing}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#">
+            {dictionary.marketing}
             </LinkWithLocale>
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.analitycs}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#">
+            {dictionary.analitycs}
             </LinkWithLocale>
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.commerce}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#">
+            {dictionary.commerce}
             </LinkWithLocale>
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.insights}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#">
+            {dictionary.insights}
             </LinkWithLocale>
           </div>
         </div>
@@ -89,24 +67,18 @@ const FooterNavWidgets = ({ dictionary }) => {
             {dictionary.support}
           </h3>
           <div className="mt-4 flex flex-col gap-2">
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.pricing}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#">
+            {dictionary.pricing}
             </LinkWithLocale>
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.guides}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#"> 
+                {dictionary.guides} 
             </LinkWithLocale>
-            <LinkWithLocale href="#">
-              <span className="text-base text-gray-500 hover:text-gray-900 block">
-                {dictionary.apiStatus}
-              </span>
+            <LinkWithLocale className="text-base text-gray-500 hover:text-gray-900 block" href="#"> 
+                {dictionary.apiStatus} 
             </LinkWithLocale>
           </div>
         </div>
-      </div> 
+      </div>  
     </div>
   );
 };

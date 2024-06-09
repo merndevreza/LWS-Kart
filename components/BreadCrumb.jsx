@@ -5,10 +5,8 @@ import LinkWithLocale from "./LinkWithLocale";
 const BreadCrumb = ({ pageTitle }) => {
   return (
     <div className="container py-4 flex items-center gap-3">
-      <LinkWithLocale href="/">
-        <span className="text-primary text-base">
-          <FontAwesomeIcon icon={faHouse} />
-        </span>
+      <LinkWithLocale className="text-primary text-base" href="/">
+      <FontAwesomeIcon icon={faHouse} />
       </LinkWithLocale>
       <span className="text-sm text-gray-400">
         <FontAwesomeIcon icon={faChevronRight} />

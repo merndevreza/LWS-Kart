@@ -13,11 +13,11 @@ const CheckoutSummary = ({ handlePlaceOrder, errors }) => {
       const result = await getAllProductsInCart();
       if (result.success) {
         setProductsWithQuantity(result?.data);
-        
+
         const subtotal = result?.data.reduce((total, item) => {
           return total + item.product.discountPrice * item.quantity;
         }, 0);
-        setSubtotalPrice(subtotal);
+        setSubtotalPrice(subtotal.toFixed(2));
       }
     }
     getProducts();
@@ -39,7 +39,7 @@ const CheckoutSummary = ({ handlePlaceOrder, errors }) => {
             </div>
             <p className="text-gray-600">x{item.quantity}</p>
             <p className="text-gray-800 font-medium">
-              ${item.product.discountPrice * item.quantity}
+              ${(item.product.discountPrice * item.quantity).toFixed(2)}
             </p>
           </div>
         ))}
@@ -47,7 +47,7 @@ const CheckoutSummary = ({ handlePlaceOrder, errors }) => {
 
       <div className="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 uppercase">
         <p>subtotal</p>
-        <p>${subtotalPrice.toFixed(2)}</p>
+        <p>${subtotalPrice}</p>
       </div>
 
       <div className="flex justify-between border-b border-gray-200 mt-1 text-gray-800 font-medium py-3 uppercase">
@@ -57,7 +57,7 @@ const CheckoutSummary = ({ handlePlaceOrder, errors }) => {
 
       <div className="flex justify-between text-gray-800 font-medium py-3 uppercase">
         <p className="font-semibold">Total</p>
-        <p>${(subtotalPrice + shippingCost).toFixed(2)}</p>
+        <p>${subtotalPrice + shippingCost}</p>
       </div>
 
       <form onSubmit={(e) => handlePlaceOrder(e, subtotalPrice)}>
@@ -74,8 +74,11 @@ const CheckoutSummary = ({ handlePlaceOrder, errors }) => {
             className="text-gray-600 ml-3 cursor-pointer text-sm"
           >
             I agree to the{" "}
-            <LinkWithLocale href="/terms-and-conditions">
-              <span className="text-primary"> Terms & conditions</span>
+            <LinkWithLocale
+              className="text-primary"
+              href="/terms-and-conditions"
+            >
+              Terms & conditions
             </LinkWithLocale>
           </label>
         </div>

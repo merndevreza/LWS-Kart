@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const LinkWithLocale = ({ children, href }) => {
+const LinkWithLocale = ({ children, href,className }) => {
   const pathname = usePathname();
   let locale = "";
 
@@ -12,7 +12,7 @@ const LinkWithLocale = ({ children, href }) => {
     locale = "/en";
   } 
   
-  return <Link href={locale + href}>{children}</Link>;
+  return <Link className={className} href={locale + href}>{children}</Link>;
 };
 
 export default LinkWithLocale;

@@ -21,8 +21,8 @@ const RegistrationPage = async ({ params: { lang } }) => {
 
         <p className="mt-4 text-center text-gray-600">
           {dictionary.alreadyHaveAccount}
-          <LinkWithLocale href="/login">
-            <span className="text-primary">{dictionary.loginNow}</span>
+          <LinkWithLocale className="text-primary" href="/login">
+          {dictionary.loginNow}
           </LinkWithLocale>
         </p>
       </div>

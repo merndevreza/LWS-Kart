@@ -100,8 +100,8 @@ const RegistrationForm = ({ dictionary }) => {
             >
               {dictionary.iHaveRead}
               <span> </span>
-              <LinkWithLocale href="#">
-                <span className="text-primary">{dictionary.TAndC}</span>
+              <LinkWithLocale className="text-primary" href="#">
+              {dictionary.TAndC}
               </LinkWithLocale>
             </label>
           </div>

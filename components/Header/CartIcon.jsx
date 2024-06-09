@@ -7,7 +7,7 @@ import useAuth from "@/app/hooks/useAuth";
 
 const CartIcon = ({ dictionary }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { userInfo, cart } = useAuth();
+  const { userInfo,cart } = useAuth(); 
   return (
     <>
       <button

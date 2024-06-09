@@ -25,8 +25,6 @@ const AddWishlistBtn = ({ detailsPage, card, productId }) => {
         if (result.success) {
           const updatedList = insertUniqId(wishlist, productId);
           setWishlist(updatedList);
-
-          console.log("Product added to Wishlist");
         } else {
           console.error("Failed to add product to Wishlist:", result.message);
         }
