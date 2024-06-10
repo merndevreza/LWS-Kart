@@ -12,6 +12,7 @@ const AccountPage = async ({ params: { lang } }) => {
   if (!session?.user) {
    redirect("/login")
  }
+ console.log("Account page", session?.user);
   return (
     <main>
       <BreadCrumb pageTitle={dictionary.account} />

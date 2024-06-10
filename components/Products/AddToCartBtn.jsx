@@ -1,6 +1,7 @@
 "use client";
 import { addToCart, removeFromWishlist } from "@/app/actions";
 import useAuth from "@/app/hooks/useAuth";
+import useGuestUser from "@/app/hooks/useGuestUser";
 import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
@@ -16,6 +17,7 @@ const AddToCartBtn = ({
   stock,
 }) => {
   const { userInfo,wishlist, setWishlist, cart, setCart } = useAuth(); 
+  const {setGuestCart}=useGuestUser()
   const router = useRouter();
 
   const insertUniqId = (arr, id, quantity) => {
@@ -52,7 +54,8 @@ const AddToCartBtn = ({
         } else {
           console.error("Failed to add product to cart:", result.message);
         }
-      } else {
+      } else { 
+        setGuestCart({productId, quantity})
         router.push("/login");
       }
     } catch (error) {

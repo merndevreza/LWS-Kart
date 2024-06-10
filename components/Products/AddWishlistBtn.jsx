@@ -1,12 +1,16 @@
 "use client";
 import { addToWishlist } from "@/app/actions";
 import useAuth from "@/app/hooks/useAuth";
+import useGuestUser from "@/app/hooks/useGuestUser";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 
 const AddWishlistBtn = ({ detailsPage, card, productId }) => {
-  const { userInfo, wishlist, setWishlist } = useAuth();
+  const { userInfo, wishlist, setWishlist } =
+    useAuth();
+    
+  const {setGuestWishlist}=useGuestUser()
   const router = useRouter();
 
   const insertUniqId = (arr, id) => {
@@ -28,13 +32,14 @@ const AddWishlistBtn = ({ detailsPage, card, productId }) => {
         } else {
           console.error("Failed to add product to Wishlist:", result.message);
         }
-      } else {
+      } else { 
+        setGuestWishlist(productId)
         router.push("/login");
       }
     } catch (error) {
       console.error("Error adding product to Wishlist:", error);
     }
-  };
+  }; 
   return (
     <button onClick={handleAddWishlist}>
       {detailsPage && (

@@ -1,32 +1,49 @@
 "use client";
-import { credentialLogin } from "@/app/actions";
+import { addToCart, addToWishlist, credentialLogin } from "@/app/actions";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import LinkWithLocale from "../LinkWithLocale";
 import useAuth from "@/app/hooks/useAuth";
+import useGuestUser from "@/app/hooks/useGuestUser";
 
 const LoginForm = ({ dictionary }) => {
-  const {setUserInfo, setWishlist,setCart}=useAuth()
+  const { setUserInfo, wishlist, setWishlist, cart, setCart } = useAuth();
+  const { guestCart, setGuestCart, guestWishlist, setGuestWishlist } =
+    useGuestUser();
   const [error, setError] = useState("");
   const router = useRouter();
-  
+
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
       const formData = new FormData(event.currentTarget);
-      const response = await credentialLogin(formData); 
+      const response = await credentialLogin(formData);
+  
       if (response.success) {
-        setUserInfo(response?.data); 
-        setCart(response?.data?.cart)
-        setWishlist(response?.data?.wishlist)
-        router.push("/");
-      }else{
+        setUserInfo(response.data);
+        setCart(response.data.cart);
+        setWishlist(response.data.wishlist);
+  
+        const result = await addToCart(guestCart.productId, guestCart.quantity);
+        if (result.success) {
+          setCart([...cart, guestCart]);
+          setGuestCart([]);
+        }
+  
+        const res = await addToWishlist(guestWishlist);
+        if (res.success) {
+          setWishlist([...wishlist, guestWishlist]);
+          setGuestWishlist([]);
+        }
+   
+      } else {
         setError(response.message);
-      } 
+      }
     } catch (error) {
       setError(error.message);
     }
   };
+  
   return (
     <>
       {error && <div className="text-red-600">{error}</div>}
@@ -73,7 +90,7 @@ const LoginForm = ({ dictionary }) => {
             </label>
           </div>
           <LinkWithLocale className="text-primary" href="#">
-           {dictionary.forgotPassword} 
+            {dictionary.forgotPassword}
           </LinkWithLocale>
         </div>
         <div className="mt-4">

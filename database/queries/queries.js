@@ -17,16 +17,23 @@ export async function getUserInfo() {
   try {
     await connectMongo();
     const session = await auth();
-    const user = await userModel.findById(session?.user?._id).lean();
+    console.log("User in session", session?.user);
+    
+    if (!session?.user) {
+      throw new Error("User not found");
+    }
+
+    const user = await userModel.findById(session.user._id).lean();
+
     if (!user) {
       throw new Error("User not found");
     }
-    
+
     return {
       success: true,
       message: "User found",
-      data: convertMongoIdToString(user)
-    }; 
+      data: convertMongoIdToString(user),
+    };
   } catch (error) {
     return { success: false, message: error.message };
   }
@@ -40,12 +47,12 @@ export async function getAllProducts(search) {
       .find({ title: { $regex: regex } })
       .select(["title", "stock", "discountPrice", "price", "size", "thumbnail"])
       .lean();
-      
+
     return {
       success: true,
       message: "Searched Products",
-      data: replaceMongoIdInArray(products)
-    };  
+      data: replaceMongoIdInArray(products),
+    };
   } catch (error) {
     return { success: false, message: error.message };
   }
@@ -61,11 +68,11 @@ export async function getLatestProducts(totalProductsNeed) {
       .select(["title", "stock", "discountPrice", "price", "thumbnail"])
       .lean();
 
-      return {
-        success: true,
-        message: "Latest Products",
-        data: replaceMongoIdInArray(products)
-      };   
+    return {
+      success: true,
+      message: "Latest Products",
+      data: replaceMongoIdInArray(products),
+    };
   } catch (error) {
     return { success: false, message: error.message };
   }
@@ -100,8 +107,8 @@ export async function getProductById(id) {
     return {
       success: true,
       message: "Product Found",
-      data: replaceMongoIdInObject(product)
-    }; 
+      data: replaceMongoIdInObject(product),
+    };
   } catch (error) {
     return { success: false, message: error.message };
   }
@@ -114,11 +121,11 @@ export async function getAllReviewsByProductId(productId) {
       .find({ productId })
       .select(["rating"])
       .lean();
-      return {
-        success: true,
-        message: "Products Ratings Found",
-        data: replaceMongoIdInArray(reviews)
-      };  
+    return {
+      success: true,
+      message: "Products Ratings Found",
+      data: replaceMongoIdInArray(reviews),
+    };
   } catch (error) {
     return { success: false, message: error.message };
   }
@@ -131,11 +138,11 @@ export async function getAllCategories(totalCategoryNeed) {
       .find()
       .limit(totalCategoryNeed)
       .lean();
-      return {
-        success: true,
-        message: "Categories Found",
-        data: replaceMongoIdInArray(categories)
-      };   
+    return {
+      success: true,
+      message: "Categories Found",
+      data: replaceMongoIdInArray(categories),
+    };
   } catch (error) {
     return { success: false, message: error.message };
   }
@@ -144,11 +151,11 @@ export async function getAllCategories(totalCategoryNeed) {
 export async function getProductsByCategoryName(categoryName) {
   try {
     await connectMongo();
-    const regex = new RegExp(categoryName, "i"); 
+    const regex = new RegExp(categoryName, "i");
     const { productsId } = await categoryModel
       .findOne({ name: { $regex: regex } })
       .select(["productsId"])
-      .lean();  
+      .lean();
     if (productsId.length > 0) {
       const products = await productsModel
         .find({ _id: { $in: productsId } })
@@ -158,8 +165,8 @@ export async function getProductsByCategoryName(categoryName) {
       return {
         success: true,
         message: "Products Found",
-        data: replaceMongoIdInArray(products)
-      };    
+        data: replaceMongoIdInArray(products),
+      };
     } else {
       throw new Error(`No products found in ${categoryName} category`);
     }
@@ -194,8 +201,8 @@ export async function getProductsFilteredByCategories(categories) {
     return {
       success: true,
       message: "Products Found",
-      data: replaceMongoIdInArray(filteredProducts)
-    };  
+      data: replaceMongoIdInArray(filteredProducts),
+    };
   } catch (error) {
     return { success: false, message: error.message };
   }
@@ -211,8 +218,8 @@ export async function getAllSizes() {
     return {
       success: true,
       message: "All Available Sizes",
-      data: allSizes
-    };   
+      data: allSizes,
+    };
   } catch (error) {
     return { success: false, message: error.message };
   }
@@ -222,7 +229,7 @@ export async function getAllSizes() {
 export async function getWishlist() {
   try {
     await connectMongo();
-    const session = await auth(); 
+    const session = await auth();
     if (!session?.user) {
       throw new Error("User not found");
     }
@@ -230,12 +237,12 @@ export async function getWishlist() {
       .findById(session?.user?._id)
       .select(["wishlist"])
       .lean();
-      
+
     return {
       success: true,
       message: "All wishlist Products Found",
-      data: wishlist
-    };   
+      data: wishlist,
+    };
   } catch (error) {
     return { success: false, message: error.message };
   }
@@ -256,11 +263,11 @@ export async function getWishlistProducts() {
       .find({ _id: { $in: productsId } })
       .select(["title", "stock", "discountPrice", "price", "thumbnail"])
       .lean();
-      return {
-        success: true,
-        message: "All wishlist Products Found",
-        data:replaceMongoIdInArray(products)
-      };    
+    return {
+      success: true,
+      message: "All wishlist Products Found",
+      data: replaceMongoIdInArray(products),
+    };
   } catch (error) {
     return { success: false, message: error.message };
   }
@@ -278,11 +285,11 @@ export async function getCartLength() {
       .findById(session?.user?._id)
       .select(["cart"])
       .lean();
-      return {
-        success: true,
-        message: "All Carts Products Found",
-        data:cart.length
-      };    
+    return {
+      success: true,
+      message: "All Carts Products Found",
+      data: cart.length,
+    };
   } catch (error) {
     return { success: false, message: error.message };
   }
@@ -313,12 +320,12 @@ export async function getAllProductsInCart() {
         return productWithQuantity;
       })
     );
-    
+
     return {
       success: true,
       message: "All Carts Products Found",
-      data:products
-    };   
+      data: products,
+    };
   } catch (error) {
     return { success: false, message: error.message };
   }

@@ -8,13 +8,14 @@ const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+
   useEffect(() => {
     async function getUser() {
       const response = await getUserInfo();
       if (response.success) {
-        setUserInfo(response?.data);
-        setCart(response?.data?.cart);
-        setWishlist(response?.data?.wishlist);
+        setUserInfo(response.data);
+        setCart(response.data.cart);
+        setWishlist(response.data.wishlist);
       }
     }
     getUser();
@@ -28,6 +29,7 @@ const AuthProvider = ({ children }) => {
     wishlist,
     setWishlist,
   };
+
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
 

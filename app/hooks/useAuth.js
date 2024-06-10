@@ -8,7 +8,7 @@ export default function useAuth() {
     cart,
     setCart,
     wishlist,
-    setWishlist,
+    setWishlist, 
   } = useContext(AuthContext);
   return {
     userInfo,
@@ -16,6 +16,6 @@ export default function useAuth() {
     cart,
     setCart,
     wishlist,
-    setWishlist,
+    setWishlist, 
   };
 }

@@ -6,6 +6,7 @@ import { Poppins, Roboto } from "next/font/google";
 import "./globals.css";
 import connectMongo from "@/database/services/connectMongo";
 import AuthProvider from "./contextProvider/providers/AuthProvider";
+import GuestUserProvider from "./contextProvider/providers/GuestUserProvider";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -31,7 +32,9 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${roboto.variable}`}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <GuestUserProvider>{children}</GuestUserProvider>
+        </AuthProvider>
       </body>
     </html>
   );

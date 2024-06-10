@@ -11,24 +11,37 @@ export async function credentialLogin(formData) {
     const response = await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
-      redirect: false,
-    }); 
-    //here I should check if the request is succeed
-    const userInfo=await getUserInfo()
-    return userInfo;
+      redirect: false, 
+    });
+
+    console.log('signIn response:', response);
+
+    if (response?.ok) {
+      const userInfo = await getUserInfo();
+      return userInfo;
+    } else {
+      return {
+        success: false,
+        message: response?.error || "User Not found",
+        data: null,
+      };
+    }
   } catch (error) {
-    throw new Error(error);
+    return {
+      success: false,
+      message: error.message,
+      data: null,
+    };
   }
 }
-
 export async function doSocialLogin(formData) {
-  await connectMongo(); 
+  await connectMongo();
   const action = formData.get("action");
   const response = await signIn(action, {
     callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/`,
   });
-  const userInfo=await getUserInfo()
   console.log("social login response", response);
+  const userInfo = await getUserInfo();
   console.log("social login user", userInfo);
   return response;
 }
