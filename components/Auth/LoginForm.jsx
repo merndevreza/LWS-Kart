@@ -1,10 +1,39 @@
 "use client";
-import { addToCart, addToWishlist, credentialLogin } from "@/app/actions";
+import { addToCart, addToWishlist } from "@/app/actions";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import LinkWithLocale from "../LinkWithLocale";
 import useAuth from "@/app/hooks/useAuth";
 import useGuestUser from "@/app/hooks/useGuestUser";
+import { signIn } from "next-auth/react";
+import { getUserInfo } from "@/database/queries/queries";
+
+async function credentialLogin(formData) {
+  try { 
+    const response = await signIn("credentials", {
+      email: formData.get("email"),
+      password: formData.get("password"),
+      redirect: false, 
+    });
+
+    if (response?.ok) {
+      const userInfo = await getUserInfo();
+      return userInfo;
+    } else {
+      return {
+        success: false,
+        message: response?.error || "User Not found",
+        data: null,
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message,
+      data: null,
+    };
+  }
+}
 
 const LoginForm = ({ dictionary }) => {
   const { setUserInfo, wishlist, setWishlist, cart, setCart } = useAuth();
@@ -16,7 +45,7 @@ const LoginForm = ({ dictionary }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      const formData = new FormData(event.currentTarget);
+      const formData = new FormData(event.currentTarget); 
       const response = await credentialLogin(formData);
   
       if (response.success) {
@@ -35,6 +64,7 @@ const LoginForm = ({ dictionary }) => {
           setWishlist([...wishlist, guestWishlist]);
           setGuestWishlist([]);
         }
+        router.push("/")
    
       } else {
         setError(response.message);

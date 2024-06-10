@@ -1,39 +1,10 @@
 "use server";
-import { auth, signIn } from "@/auth";
+import { auth, signIn } from "@/auth"; 
 import { salesModel } from "@/database/models/sales-model";
 import { userModel } from "@/database/models/users-model";
 import { getUserInfo } from "@/database/queries/queries";
 import connectMongo from "@/database/services/connectMongo";
 
-export async function credentialLogin(formData) {
-  try {
-    await connectMongo();
-    const response = await signIn("credentials", {
-      email: formData.get("email"),
-      password: formData.get("password"),
-      redirect: false, 
-    });
-
-    console.log('signIn response:', response);
-
-    if (response?.ok) {
-      const userInfo = await getUserInfo();
-      return userInfo;
-    } else {
-      return {
-        success: false,
-        message: response?.error || "User Not found",
-        data: null,
-      };
-    }
-  } catch (error) {
-    return {
-      success: false,
-      message: error.message,
-      data: null,
-    };
-  }
-}
 export async function doSocialLogin(formData) {
   await connectMongo();
   const action = formData.get("action");
