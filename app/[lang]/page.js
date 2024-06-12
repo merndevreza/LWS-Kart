@@ -9,8 +9,7 @@ import { auth } from "@/auth";
 
 export default async function Home({ params: { lang } }) {
   const dictionary = await getDictionary(lang);
-  const session = await auth();
-  console.log("Home Page Checking User", session?.user);
+  const session = await auth(); 
   return (
     <main>
       <Hero dictionary={dictionary} />

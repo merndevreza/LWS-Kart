@@ -7,6 +7,7 @@ import useAuth from "@/app/hooks/useAuth";
 import useGuestUser from "@/app/hooks/useGuestUser";
 import { signIn } from "next-auth/react";
 import { getUserInfo } from "@/database/queries/queries";
+import useCurrentLocale from "@/app/hooks/useCurrentLocale";
 
 async function credentialLogin(formData) {
   try { 
@@ -41,7 +42,7 @@ const LoginForm = ({ dictionary }) => {
     useGuestUser();
   const [error, setError] = useState("");
   const router = useRouter();
-
+  const locale=useCurrentLocale()
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -64,7 +65,7 @@ const LoginForm = ({ dictionary }) => {
           setWishlist([...wishlist, guestWishlist]);
           setGuestWishlist([]);
         }
-        router.push("/")
+        router.push(`${locale}`)
    
       } else {
         setError(response.message);

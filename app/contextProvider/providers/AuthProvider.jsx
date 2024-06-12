@@ -12,10 +12,10 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function getUser() {
       const response = await getUserInfo();
-      if (response.success) {
-        setUserInfo(response.data);
-        setCart(response.data.cart);
-        setWishlist(response.data.wishlist);
+      if (response?.success) {
+        setUserInfo(response?.data);
+        setCart(response?.data.cart);
+        setWishlist(response?.data.wishlist);
       }
     }
     getUser();

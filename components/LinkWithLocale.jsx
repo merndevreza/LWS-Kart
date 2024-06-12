@@ -1,17 +1,10 @@
 "use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import useCurrentLocale from "@/app/hooks/useCurrentLocale";
+import Link from "next/link"; 
 
 const LinkWithLocale = ({ children, href,className }) => {
-  const pathname = usePathname();
-  let locale = "";
+  const locale=useCurrentLocale()
 
-  if (pathname.includes("/bn") || pathname.includes("/bn/")) {
-    locale = "/bn";
-  } else {
-    locale = "/en";
-  } 
-  
   return <Link className={className} href={locale + href}>{children}</Link>;
 };
 

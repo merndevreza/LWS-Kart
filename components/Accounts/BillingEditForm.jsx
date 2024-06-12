@@ -32,8 +32,7 @@ const BillingEditForm = ({ setShow, dictionary }) => {
             zip: formData.zip,
             phone: formData.phone,
           },
-        });
-        console.log("Profile updated successfully!");
+        }); 
       } else {
         console.log("Failed to update profile");
       }

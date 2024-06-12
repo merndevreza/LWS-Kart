@@ -1,25 +1,19 @@
 "use client";
+import useCurrentLocale from "@/app/hooks/useCurrentLocale";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const Search = ({ dictionary }) => {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
+  const searchParams = useSearchParams(); 
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
+  const locale=useCurrentLocale()
 
   const doSearch = (event) => {
     event.preventDefault();
-    let locale = "";
-
-    if (pathname.includes("/bn") || pathname.includes("/bn/")) {
-      locale = "/bn";
-    } else {
-      locale = "/en";
-    }
-
+     
     const params = new URLSearchParams(searchParams);
     params.set("search", searchTerm);
 

@@ -1,6 +1,7 @@
 "use client";
 import { addToCart, removeFromWishlist } from "@/app/actions";
 import useAuth from "@/app/hooks/useAuth";
+import useCurrentLocale from "@/app/hooks/useCurrentLocale";
 import useGuestUser from "@/app/hooks/useGuestUser";
 import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +20,7 @@ const AddToCartBtn = ({
   const { userInfo,wishlist, setWishlist, cart, setCart } = useAuth(); 
   const {setGuestCart}=useGuestUser()
   const router = useRouter();
+  const locale=useCurrentLocale()
 
   const insertUniqId = (arr, id, quantity) => {
     const exists = arr.some((item) => item.productId === id);
@@ -56,7 +58,7 @@ const AddToCartBtn = ({
         }
       } else { 
         setGuestCart({productId, quantity})
-        router.push("/login");
+        router.push(`${locale}`)
       }
     } catch (error) {
       console.error("Error adding product to cart:", error);

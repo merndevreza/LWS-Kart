@@ -1,17 +1,12 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import CartProducts from "./CartProducts";
+import useCurrentLocale from "@/app/hooks/useCurrentLocale";
 
 const CartDrawer = ({ isOpen, setIsOpen }) => {
-  const router = useRouter();
-  const pathname = usePathname();
-  let locale = "";
-
-  if (pathname.includes("/bn") || pathname.includes("/bn/")) {
-    locale = "/bn";
-  } else {
-    locale = "/en";
-  }
+  const router = useRouter(); 
+  const locale=useCurrentLocale()
+   
   const handleNavigate = () => {
     setIsOpen(false);
     router.push(`${locale}/shop/checkout`);

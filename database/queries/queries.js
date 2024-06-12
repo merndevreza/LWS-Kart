@@ -16,14 +16,13 @@ import { auth } from "@/auth";
 export async function getUserInfo() {
   try {
     await connectMongo();
-    const session = await auth();
-    console.log("User in session", session?.user);
-    
+    const session = await auth();  
     if (!session?.user) {
       throw new Error("User not found");
-    }
-
-    const user = await userModel.findById(session.user._id).lean();
+    } 
+    const user = await userModel
+      .findById(session?.user?._id || session?.user?.id)
+      .lean();
 
     if (!user) {
       throw new Error("User not found");
@@ -234,7 +233,7 @@ export async function getWishlist() {
       throw new Error("User not found");
     }
     const { wishlist } = await userModel
-      .findById(session?.user?._id)
+      .findById(session?.user?._id || session?.user?.id)
       .select(["wishlist"])
       .lean();
 
@@ -255,7 +254,7 @@ export async function getWishlistProducts() {
       throw new Error("User not found");
     }
     const { wishlist } = await userModel
-      .findById(session?.user?._id)
+      .findById(session?.user?._id || session?.user?.id)
       .select(["wishlist"])
       .lean();
     const productsId = wishlist.map((item) => item.productId);
@@ -282,7 +281,7 @@ export async function getCartLength() {
       throw new Error("User not found");
     }
     const { cart } = await userModel
-      .findById(session?.user?._id)
+      .findById(session?.user?._id || session?.user?.id)
       .select(["cart"])
       .lean();
     return {
@@ -302,7 +301,7 @@ export async function getAllProductsInCart() {
       throw new Error("User not found");
     }
     const { cart } = await userModel
-      .findById(session?.user?._id)
+      .findById(session?.user?._id || session?.user?.id)
       .select(["cart"])
       .lean();
 

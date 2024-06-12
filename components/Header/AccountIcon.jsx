@@ -14,6 +14,7 @@ const AccountIcon = ({ dictionary }) => {
         <div className="text-2xl">
           {userInfo?.image ? (
             <Image
+            className="rounded-full mx-auto mb-2"
               src={userInfo?.image}
               alt={userInfo?.name}
               width={24}

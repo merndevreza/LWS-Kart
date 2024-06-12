@@ -2,10 +2,12 @@
 import { useState } from "react";
 import LinkWithLocale from "../LinkWithLocale";
 import { useRouter } from "next/navigation";
+import useCurrentLocale from "@/app/hooks/useCurrentLocale";
 
 const RegistrationForm = ({ dictionary }) => {
   const [error, setError] = useState("");
   const router = useRouter();
+  const locale=useCurrentLocale()
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -27,7 +29,7 @@ const RegistrationForm = ({ dictionary }) => {
           password,
         }),
       });
-      response.status === 201 && router.push("/login");
+      response.status === 201 && router.push(`${locale}/login`);
     } catch (error) {
       setError(error.message);
     }

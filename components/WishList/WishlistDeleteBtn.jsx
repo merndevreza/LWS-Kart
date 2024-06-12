@@ -20,7 +20,6 @@ const WishlistDeleteBtn = ({ productId,products, setProducts }) => {
 
         const updatedWishlist = removeId(wishlist, productId);
         setWishlist(updatedWishlist);
-
         console.log("Product removed from Wishlist");
       } else {
         console.error("Failed removed from Wishlist:", result.message);

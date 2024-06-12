@@ -1,28 +1,15 @@
 "use server";
-import { auth, signIn } from "@/auth"; 
+import { auth } from "@/auth"; 
 import { salesModel } from "@/database/models/sales-model";
-import { userModel } from "@/database/models/users-model";
-import { getUserInfo } from "@/database/queries/queries";
+import { userModel } from "@/database/models/users-model"; 
 import connectMongo from "@/database/services/connectMongo";
-
-export async function doSocialLogin(formData) {
-  await connectMongo();
-  const action = formData.get("action");
-  const response = await signIn(action, {
-    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/`,
-  });
-  console.log("social login response", response);
-  const userInfo = await getUserInfo();
-  console.log("social login user", userInfo);
-  return response;
-}
 
 export async function addToCart(productId, quantity) {
   try {
     await connectMongo();
     const session = await auth();
 
-    const user = await userModel.findById(session?.user?._id);
+    const user = await userModel.findById(session?.user?._id || session?.user?.id);
     if (!user) {
       throw new Error("User not found");
     }
@@ -49,7 +36,7 @@ export async function addToWishlist(productId) {
     await connectMongo();
 
     const session = await auth();
-    const user = await userModel.findById(session?.user?._id);
+    const user = await userModel.findById(session?.user?._id || session?.user?.id);
     if (!user) {
       throw new Error("User not found");
     }
@@ -72,7 +59,7 @@ export async function removeFromWishlist(productId) {
   try {
     await connectMongo();
     const session = await auth();
-    const user = await userModel.findById(session?.user?._id);
+    const user = await userModel.findById(session?.user?._id || session?.user?.id);
     if (!user) {
       throw new Error("User not found");
     }
@@ -99,7 +86,7 @@ export async function removeFromCart(productId) {
   try {
     await connectMongo();
     const session = await auth();
-    const user = await userModel.findById(session?.user?._id);
+    const user = await userModel.findById(session?.user?._id || session?.user?.id);
     if (!user) {
       throw new Error("User not found");
     }
@@ -124,7 +111,7 @@ export async function updateUserProfile(formData, type) {
   try {
     await connectMongo();
     const session = await auth();
-    const user = await userModel.findById(session?.user?._id);
+    const user = await userModel.findById(session?.user?._id || session?.user?.id);
     if (!user) {
       throw new Error("User not found");
     }
@@ -159,7 +146,7 @@ export async function placeOrder(formData) {
   try {
     await connectMongo();
     const session = await auth();
-    const user = await userModel.findById(session?.user?._id);
+    const user = await userModel.findById(session?.user?._id || session?.user?.id);
     if (!user) {
       throw new Error("User not found");
     }
