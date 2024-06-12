@@ -58,7 +58,7 @@ const AddToCartBtn = ({
         }
       } else { 
         setGuestCart({productId, quantity})
-        router.push(`${locale}`)
+        router.push(`${locale}/login`)
       }
     } catch (error) {
       console.error("Error adding product to cart:", error);

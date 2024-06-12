@@ -9,7 +9,7 @@ const ProductDetailsPage = async ({ params: { productId } }) => {
   const response = await getProductById(productId);
   let product = {};
   if (response.success) {
-    product = response.data;
+    product = response?.data;
   } 
   return (
     <main>

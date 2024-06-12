@@ -49,10 +49,10 @@ const LoginForm = ({ dictionary }) => {
       const formData = new FormData(event.currentTarget); 
       const response = await credentialLogin(formData);
   
-      if (response.success) {
-        setUserInfo(response.data);
-        setCart(response.data.cart);
-        setWishlist(response.data.wishlist);
+      if (response?.success) {
+        setUserInfo(response?.data);
+        setCart(response?.data?.cart);
+        setWishlist(response?.data?.wishlist);
   
         const result = await addToCart(guestCart.productId, guestCart.quantity);
         if (result.success) {
@@ -68,7 +68,7 @@ const LoginForm = ({ dictionary }) => {
         router.push(`${locale}`)
    
       } else {
-        setError(response.message);
+        setError(response?.message);
       }
     } catch (error) {
       setError(error.message);

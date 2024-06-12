@@ -5,9 +5,17 @@ import CheckoutSummary from "./CheckoutSummary";
 import useAuth from "@/app/hooks/useAuth";
 import { placeOrder } from "@/app/actions";
 import Modal from "../Modal/Modal";
-import Success from "../Modal/Success";
+import Success from "../Modal/Success"; 
+import useCurrentLocale from "@/app/hooks/useCurrentLocale";
+import { useRouter } from "next/navigation";
 
-const CheckoutWrapper = ({ dictionary }) => {
+const CheckoutWrapper = ({ dictionary,session }) => {
+  const locale = useCurrentLocale();
+  const router = useRouter();
+  if (!session?.user) {
+   router.push(`${locale}/login`)
+  }
+
   const [showModal, setShowModal] = useState(false);
   const { userInfo, setCart } = useAuth();
   const [formData, setFormData] = useState({

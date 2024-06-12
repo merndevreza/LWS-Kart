@@ -8,7 +8,6 @@ export async function addToCart(productId, quantity) {
   try {
     await connectMongo();
     const session = await auth();
-
     const user = await userModel.findById(session?.user?._id || session?.user?.id);
     if (!user) {
       throw new Error("User not found");
@@ -23,9 +22,7 @@ export async function addToCart(productId, quantity) {
     } else {
       user.cart.push({ productId, quantity });
     }
-
     await user.save();
-
     return { success: true, message: "Product added to cart" };
   } catch (error) {
     return { success: false, message: error.message };

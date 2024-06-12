@@ -36,7 +36,7 @@ const AddWishlistBtn = ({ detailsPage, card, productId }) => {
         }
       } else { 
         setGuestWishlist(productId)
-        router.push(`${locale}`)
+        router.push(`${locale}/login`)
       }
     } catch (error) {
       console.error("Error adding product to Wishlist:", error);

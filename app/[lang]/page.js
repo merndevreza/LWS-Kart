@@ -4,12 +4,10 @@ import FeaturesInfo from "@/components/Home/FeaturesInfo";
 import Hero from "@/components/Home/Hero";
 import NewArrival from "@/components/Home/NewArrival";
 import { getDictionary } from "./dictionary/dictionary";
-import TrendingProducts from "@/components/Home/TrendingProducts";
-import { auth } from "@/auth";
+import TrendingProducts from "@/components/Home/TrendingProducts"; 
 
 export default async function Home({ params: { lang } }) {
-  const dictionary = await getDictionary(lang);
-  const session = await auth(); 
+  const dictionary = await getDictionary(lang); 
   return (
     <main>
       <Hero dictionary={dictionary} />

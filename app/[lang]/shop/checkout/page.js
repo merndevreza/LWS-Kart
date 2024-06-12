@@ -1,19 +1,15 @@
 import BreadCrumb from "@/components/BreadCrumb";
 import { getDictionary } from "../../dictionary/dictionary";
 import CheckoutWrapper from "@/components/Checkout/CheckoutWrapper";
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+import { auth } from "@/auth"; 
 
 const CheckoutPage = async({params:{lang}}) => {
   const dictionary = await getDictionary(lang);
-  const session=await auth();
-  if (!session?.user) {
-    redirect("/login")
-  }
+  const session=await auth(); 
   return (
     <main>
       <BreadCrumb pageTitle="Checkout" />
-      <CheckoutWrapper dictionary={dictionary}/>
+      <CheckoutWrapper session={session} dictionary={dictionary}/>
     </main>
   );
 };
